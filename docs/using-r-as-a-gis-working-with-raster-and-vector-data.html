@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>How To Do Archaeological Science Using R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="How To Do Archaeological Science Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="How To Do Archaeological Science Using R" />
+  
+  <meta name="twitter:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  
+
+<meta name="author" content="Ben Marwick (editor)">
+
+
+<meta name="date" content="2017-03-29">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html">
+<link rel="next" href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.7/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<link href="libs/leaflet-label-0.2.2/leaflet.label.css" rel="stylesheet" />
+<script src="libs/leaflet-label-0.2.2/leaflet.label.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4leaflet.js"></script>
+<script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/plotlyjs-1.16.3/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.16.3/plotly-latest.min.js"></script>
+<script src="libs/plotly-binding-4.5.6/plotly.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">How To Do Archaeological Science Using R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html"><i class="fa fa-check"></i><b>2</b> Basic spatial analysis in R: Point pattern analysis</a><ul>
+<li class="chapter" data-level="2.0.1" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#introduction-1"><i class="fa fa-check"></i><b>2.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.0.2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#summary"><i class="fa fa-check"></i><b>2.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><i class="fa fa-check"></i><b>3</b> Using linear models to explore children’s institutions in urban areas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#introduction-2"><i class="fa fa-check"></i><b>3.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.0.2" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#summary-1"><i class="fa fa-check"></i><b>3.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><i class="fa fa-check"></i><b>4</b> Agent-based modelling prehistoric landscape use with R and NetLogo</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#introduction-3"><i class="fa fa-check"></i><b>4.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.0.2" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#agent-based-modeling-with-netlogo-and-r"><i class="fa fa-check"></i><b>4.0.2</b> Agent-based modeling with NetLogo and R</a></li>
+<li class="chapter" data-level="4.0.3" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#starting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.3</b> Starting NetLogo from R</a></li>
+<li class="chapter" data-level="4.0.4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#running-a-netlogo-model-from-r"><i class="fa fa-check"></i><b>4.0.4</b> Running a NetLogo model from R</a></li>
+<li class="chapter" data-level="4.0.5" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#getting-data-back-from-netlogo"><i class="fa fa-check"></i><b>4.0.5</b> Getting data back from NetLogo</a></li>
+<li class="chapter" data-level="4.0.6" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#plotting-the-data"><i class="fa fa-check"></i><b>4.0.6</b> Plotting the data</a></li>
+<li class="chapter" data-level="4.0.7" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#quitting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.7</b> Quitting NetLogo from R</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><i class="fa fa-check"></i><b>5</b> Tempo Plots in R for Analysing Radiocarbon Dates</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeological-motivation"><i class="fa fa-check"></i><b>5.0.1</b> Archaeological Motivation</a></li>
+<li class="chapter" data-level="5.0.2" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#obtain-mcmc-output-from-calibration-software"><i class="fa fa-check"></i><b>5.0.2</b> Obtain MCMC Output from Calibration Software</a></li>
+<li class="chapter" data-level="5.0.3" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#read-oxcal-mcmc-output"><i class="fa fa-check"></i><b>5.0.3</b> Read OxCal MCMC Output</a></li>
+<li class="chapter" data-level="5.0.4" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#select-and-confirm-columns-to-plot"><i class="fa fa-check"></i><b>5.0.4</b> Select and Confirm Columns to Plot</a></li>
+<li class="chapter" data-level="5.0.5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#load-and-run-calc.tempo-function"><i class="fa fa-check"></i><b>5.0.5</b> Load and Run <code>calc.tempo</code> Function</a></li>
+<li class="chapter" data-level="5.0.6" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#check-calc.tempo-output"><i class="fa fa-check"></i><b>5.0.6</b> Check <code>calc.tempo</code> Output</a></li>
+<li class="chapter" data-level="5.0.7" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#example-plot-with-plot.tempo"><i class="fa fa-check"></i><b>5.0.7</b> Example Plot with <code>plot.tempo</code></a></li>
+<li class="chapter" data-level="5.0.8" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeophases-software"><i class="fa fa-check"></i><b>5.0.8</b> ArchaeoPhases software</a></li>
+<li class="chapter" data-level="5.0.9" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#demo-files"><i class="fa fa-check"></i><b>5.0.9</b> Demo Files</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html"><i class="fa fa-check"></i><b>6</b> Using R as a GIS: working with raster and vector data</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html#introduction-4"><i class="fa fa-check"></i><b>6.0.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><i class="fa fa-check"></i><b>7</b> Using R to analyse occupation as a function of geographical variables using logistic regression.</a><ul>
+<li class="chapter" data-level="7.1" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html"><i class="fa fa-check"></i><b>8</b> Landscape-based Hypothesis Testing in R</a><ul>
+<li class="chapter" data-level="8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#introduction-6"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#learning-goals"><i class="fa fa-check"></i><b>8.2</b> Learning goals</a></li>
+<li class="chapter" data-level="8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#loading-necessary-packages"><i class="fa fa-check"></i><b>8.3</b> Loading necessary packages</a></li>
+<li class="chapter" data-level="8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#defining-the-study-area"><i class="fa fa-check"></i><b>8.4</b> Defining the study area</a></li>
+<li class="chapter" data-level="8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#reading-site-locations-from-a-table-and-cropping-to-a-study-area"><i class="fa fa-check"></i><b>8.5</b> Reading “site” locations from a table and cropping to a study area</a></li>
+<li class="chapter" data-level="8.6" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#visualizing-site-locations"><i class="fa fa-check"></i><b>8.6</b> Visualizing site locations</a></li>
+<li class="chapter" data-level="8.7" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#downloading-landscape-data-with-feddata"><i class="fa fa-check"></i><b>8.7</b> Downloading landscape data with <em>FedData</em></a></li>
+<li class="chapter" data-level="8.8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#are-sites-situated-based-on-elevation"><i class="fa fa-check"></i><b>8.8</b> Are sites situated based on elevation?</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#extract-site-elevations"><i class="fa fa-check"></i><b>8.8.1</b> Extract site elevations</a></li>
+<li class="chapter" data-level="8.8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#calculate-kernel-density-curves-for-sites-and-landscape"><i class="fa fa-check"></i><b>8.8.2</b> Calculate kernel density curves for sites and landscape</a></li>
+<li class="chapter" data-level="8.8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#plot-the-kernel-density-curves"><i class="fa fa-check"></i><b>8.8.3</b> Plot the kernel density curves</a></li>
+<li class="chapter" data-level="8.8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#mann-whitney-u-test-comparing-non-normal-distributions"><i class="fa fa-check"></i><b>8.8.4</b> Mann-Whitney U test comparing non-normal distributions</a></li>
+<li class="chapter" data-level="8.8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#references-cited"><i class="fa fa-check"></i><b>8.8.5</b> References cited</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How To Do Archaeological Science Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="using-r-as-a-gis-working-with-raster-and-vector-data" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Using R as a GIS: working with raster and vector data</h1>
+<p>Daniel Contreras</p>
+<div id="introduction-4" class="section level3">
+<h3><span class="header-section-number">6.0.1</span> Introduction</h3>
+<p>A common GIS task in archaeology is that of relating raster and vector data - e.g., relating site locations to environmental variables such as elevation, slope, and aspect. It’s common to do this by calculating values for the point locations in a shapefile of sites, and often of interest to compare environmental variables across some aspect of site variability - function, time period, size, etc. Here we’ll take a slightly more robust approach that looks at the areas around sites rather than their precise locations, calculating a buffer around each site location and then averaging the values of multiple environmental variables within those buffers. For simplicity we’ll use a DEM and rasters of slope and aspect that we can derive from it, but any other raster data could also be employed. Using a fictionalized dataset for a small area in Provence, we’ll take a look at some tools for exploring spatial data, and show that the areas settled in the Early Iron Age and the Gallo-Roman Period were significantly distinct with respect to some variables, but similar in others.</p>
+<p>We might hypothesize, for instance, that the Roman colonization of the area was based on cereal agriculture production for export, and that as a result Gallo-Roman period settlement would have prioritized relatively low, flat land appropriate for such activity. We could test this hypothesis by comparing the areas occupied in the two periods with respect to elevation and slope.</p>
+<div id="first-steps-data-import-and-format" class="section level4">
+<h4><span class="header-section-number">6.0.1.1</span> First Steps: Data Import and Format</h4>
+<p>We’ll begin by loading a few packages…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># getting started: load necessary packages</span>
+<span class="kw">require</span>(rgdal)
+<span class="kw">require</span>(raster)
+<span class="kw">require</span>(rasterVis)
+<span class="kw">require</span>(lattice)</code></pre></div>
+<p>…and then importing and examining the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#   Import data - first a 30m DEM from NASA SRTM data (http://doi.org/10.5067/MEaSUREs/SRTM/SRTMGL1N.003) in geotiff format (though raster() will read any format that rgdal::readGDAL() recognizes), and then a point shapefile (a standard ESRI .shp, though rgdal::readOGR() can import many other sorts of spatial data also). </span>
+
+<span class="co"># commands: raster::raster(), rgdal::readOGR() </span>
+areaDEM &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;demo_files/areaDEM.tif&quot;</span>)  <span class="co"># read raster</span>
+
+areaDEMutm &lt;-<span class="st"> </span><span class="kw">projectRaster</span>(areaDEM, 
+                            <span class="dt">crs=</span><span class="st">&quot;+proj=utm +zone=31 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;</span>) <span class="co"># It will be easier to work with projected data, so we&#39;ll project this to UTM using the appropriate proj4 string (http://proj4.org/index.html) for the CRS (Coordinate Reference System) that we want.</span>
+
+areaDEMutm  <span class="co"># Have a quick look at this to make sure nothing has gone terribly wrong - with the raster package loaded typing the name of a raster object will give you summary data about that object.</span></code></pre></div>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 862, 1372, 1182664  (nrow, ncol, ncell)
+## resolution  : 22.3, 30.9  (x, y)
+## extent      : 670963.1, 701558.7, 4838878, 4865514  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=utm +zone=31 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## data source : in memory
+## names       : areaDEM 
+## values      : 91.62182, 1121.591  (min, max)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sites &lt;-<span class="st"> </span><span class="kw">readOGR</span>(<span class="dt">dsn=</span><span class="st">&quot;demo_files&quot;</span>, <span class="dt">layer=</span><span class="st">&quot;areaPoints&quot;</span>) <span class="co"># read .shp (note that to read a shapefile, &quot;the data source name (dsn= argument) is the folder (directory) where the shapefile is, and the layer is the name of the shapefile (without the .shp extension)&quot; (from the rgdal::readOGR documentation))</span></code></pre></div>
+<pre><code>## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;demo_files&quot;, layer: &quot;areaPoints&quot;
+## with 1061 features
+## It has 3 fields
+## Integer64 fields read as strings:  ID</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sites_sub &lt;-<span class="st"> </span>sites[sites$period ==<span class="st"> &quot;EIA&quot;</span> |<span class="st"> </span>sites$period ==<span class="st"> &quot;GalRom&quot;</span>,]  <span class="co"># subset points to eliminate sites of uncertain date - i.e., select from &#39;sites&#39; only those rows in which the &#39;period&#39; column is &quot;EIA&quot; or &quot;GalRom&quot;.</span>
+
+sites_sub$period &lt;-<span class="st"> </span><span class="kw">factor</span>(sites_sub$period) <span class="co"># drop unused levels (not strictly necessary but will avoid messiness when plotting data later)</span>
+
+sites_sub_utm &lt;-<span class="st"> </span><span class="kw">spTransform</span>(sites_sub, 
+                             <span class="st">&quot;+proj=utm +zone=31 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;</span>) <span class="co"># project points to UTM </span>
+
+sites_sub_utm  <span class="co"># Check the file (note that it is now a Spatial Points Data Frame, and typing its name will give you an object summary).  Note that there is a &#39;type&#39; field that we won&#39;t work with here, but which could be incorporated into this kind of analysis, e.g., by further sub-setting or by grouping data when boxplotting.</span></code></pre></div>
+<pre><code>## class       : SpatialPointsDataFrame 
+## features    : 585 
+## extent      : 671788.9, 700793.6, 4839110, 4864963  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=utm +zone=31 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## variables   : 3
+## names       : period,     type, ID 
+## min values  :    EIA, domestic,  1 
+## max values  : GalRom,    other, 99</code></pre>
+</div>
+<div id="working-with-a-dem" class="section level4">
+<h4><span class="header-section-number">6.0.1.2</span> Working with a DEM</h4>
+<p>We can use the DEM to calculate DEM derivatives.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># </span>
+
+<span class="co"># commands: raster::terrain() </span>
+
+area_slope &lt;-<span class="st"> </span><span class="kw">terrain</span>(areaDEMutm, <span class="dt">opt =</span> <span class="st">&#39;slope&#39;</span>, <span class="dt">unit =</span> <span class="st">&#39;degrees&#39;</span>)  <span class="co">#calculate slope</span>
+
+area_aspect &lt;-<span class="st"> </span><span class="kw">terrain</span>(areaDEMutm, <span class="dt">opt =</span> <span class="st">&#39;aspect&#39;</span>, <span class="dt">unit =</span> <span class="st">&#39;degrees&#39;</span>) <span class="co">#calculate aspect</span>
+
+<span class="co">#Have a quick look at these to see that the results make sense - they are now raster objects just like areaDEM and can be examined the same way.</span>
+area_slope</code></pre></div>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 862, 1372, 1182664  (nrow, ncol, ncell)
+## resolution  : 22.3, 30.9  (x, y)
+## extent      : 670963.1, 701558.7, 4838878, 4865514  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=utm +zone=31 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## data source : in memory
+## names       : slope 
+## values      : 0, 64.11368  (min, max)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">area_aspect</code></pre></div>
+<pre><code>## class       : RasterLayer 
+## dimensions  : 862, 1372, 1182664  (nrow, ncol, ncell)
+## resolution  : 22.3, 30.9  (x, y)
+## extent      : 670963.1, 701558.7, 4838878, 4865514  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=utm +zone=31 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## data source : in memory
+## names       : aspect 
+## values      : 0, 360  (min, max)</code></pre>
+<p>Those summaries are useful, but let’s also plot our raster DEM; this is not strictly necessary, but it’s reassuring to see that the data are meaningful. We won’t try to make the plot too pretty; the options specified do just enough to plot it as an intelligible terrain DEM.</p>
+</div>
+<div id="raster-and-point-plotting" class="section level4">
+<h4><span class="header-section-number">6.0.1.3</span> Raster and Point Plotting</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#</span>
+
+<span class="co"># commands: rasterVis::levelplot(), it&#39;s also a function in the lattice pkg, so let&#39;s specify the namespace just to be sure we are using the right function </span>
+rasterVis::<span class="kw">levelplot</span>(areaDEMutm,
+          <span class="dt">margin =</span> <span class="kw">list</span>(<span class="dt">x =</span> <span class="ot">FALSE</span>, 
+                        <span class="dt">y =</span> <span class="ot">TRUE</span>),
+  <span class="dt">col.regions =</span> <span class="kw">terrain.colors</span>(<span class="dv">16</span>),
+  <span class="dt">xlab =</span> <span class="kw">list</span>(<span class="dt">label =</span> <span class="st">&quot;&quot;</span>, 
+              <span class="dt">vjust =</span> -<span class="fl">0.25</span>),
+  <span class="dt">sub =</span> <span class="kw">list</span>(
+    <span class="dt">label =</span> <span class="st">&quot;masl&quot;</span>,
+    <span class="dt">font =</span> <span class="dv">1</span>,
+    <span class="dt">cex =</span> .<span class="dv">9</span>,
+    <span class="dt">hjust =</span> <span class="fl">1.5</span>))</code></pre></div>
+<p><img src="05_Contreras_files/figure-html/plotraster-1.png" width="672" /></p>
+<p>We can check that our data occupy the same space, and visually assess our hypothesis, by plotting the raster with the sites overlain as points, varying color and shape by period. Since this is just for exploratory purposes, we won’t worry about making it too pretty.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># commands: sp::spplot() </span>
+rasterVis::<span class="kw">levelplot</span>(areaDEMutm,
+  <span class="dt">margin =</span> <span class="kw">list</span>(<span class="dt">x =</span> F, 
+                <span class="dt">y =</span> T),
+  <span class="dt">col.regions =</span> <span class="kw">terrain.colors</span>(<span class="dv">16</span>),
+  <span class="dt">xlab =</span> <span class="kw">list</span> (<span class="dt">label =</span> <span class="st">&quot;&quot;</span>, 
+               <span class="dt">vjust =</span> -.<span class="dv">25</span>),
+  <span class="dt">sub =</span> <span class="kw">list</span>(
+    <span class="dt">label =</span> <span class="st">&quot;masl&quot;</span>,
+    <span class="dt">font =</span> <span class="dv">1</span>,
+    <span class="dt">cex =</span> .<span class="dv">9</span>,
+    <span class="dt">hjust =</span> <span class="fl">1.5</span>),
+  <span class="dt">key =</span> <span class="kw">list</span>(       <span class="co">#this time we&#39;ll include a legend that identifies the points we&#39;ll plot</span>
+    <span class="dt">space =</span> <span class="st">&quot;top&quot;</span>,
+    <span class="dt">points =</span> <span class="kw">list</span>(
+      <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">18</span>,<span class="dv">20</span>),
+      <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>)), 
+    <span class="dt">text =</span> <span class="kw">list</span>(
+      <span class="kw">c</span>(<span class="st">&quot;EIA&quot;</span>,<span class="st">&quot;GalRom&quot;</span>),
+      <span class="dt">cex=</span>.<span class="dv">8</span>))
+  ) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">spplot</span>(sites_sub_utm, <span class="co"># add a layer of points</span>
+         <span class="dt">zcol =</span> <span class="st">&quot;period&quot;</span>, 
+         <span class="dt">cex =</span> .<span class="dv">6</span>,
+         <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">18</span>,<span class="dv">20</span>),
+         <span class="dt">col.regions =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>)
+         )  </code></pre></div>
+<p><img src="05_Contreras_files/figure-html/addpoints-1.png" width="672" /></p>
+<p>Satisfied that our data make sense, and perhaps already having developed some ideas about site distribution just by staring at the map, we can move on to explore the site locations analytically. We’ll begin by building a raster stack that consists of the rasters of the three variables we’ll examine: elevation, slope, and aspect.</p>
+</div>
+<div id="raster-stacks" class="section level4">
+<h4><span class="header-section-number">6.0.1.4</span> Raster Stacks</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># commands: raster::stack()</span>
+terrainstack &lt;-<span class="st"> </span><span class="kw">stack</span>(areaDEMutm, 
+                      area_slope, 
+                      area_aspect)
+
+terrainstack <span class="co"># have a quick look at resulting object, which shows the number of layers and the min/max values we expect</span></code></pre></div>
+<pre><code>## class       : RasterStack 
+## dimensions  : 862, 1372, 1182664, 3  (nrow, ncol, ncell, nlayers)
+## resolution  : 22.3, 30.9  (x, y)
+## extent      : 670963.1, 701558.7, 4838878, 4865514  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=utm +zone=31 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0 
+## names       :    areaDEM,      slope,     aspect 
+## min values  :   91.62182,    0.00000,    0.00000 
+## max values  : 1121.59056,   64.11368,  359.99998</code></pre>
+</div>
+<div id="using-extract-to-selectively-summarize-raster-data" class="section level4">
+<h4><span class="header-section-number">6.0.1.5</span> Using extract() to selectively summarize raster data</h4>
+<p>We can then take that raster stack and use extract() to summarize values of DEM, slope, and aspect within a buffer around each point.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># commands: raster::extract()</span>
+sites_vals &lt;-<span class="st"> </span><span class="kw">extract</span>(terrainstack,
+                      sites_sub_utm,
+                      <span class="dt">buffer =</span> <span class="dv">250</span>,
+                      <span class="dt">fun =</span> mean,
+                      <span class="dt">sp =</span> <span class="ot">TRUE</span>) <span class="co"># extract the mean values w/in a 250m radius around each site for each terrain variable</span></code></pre></div>
+<p>The results can be examined in any number of ways; here we’ll make boxplots for each of the variables of interest. We’ll plot each variable by period, so each result will comprise two box-and-whisker plots, one for the Early Iron Age and one for the Gallo-Roman Period</p>
+</div>
+<div id="boxplotting-for-exploratory-data-analysis" class="section level4">
+<h4><span class="header-section-number">6.0.1.6</span> Boxplotting for exploratory data analysis</h4>
+<p>As with the exploratory raster-and-point plotting we did above, we won’t worry too much about making these plots pretty; we’ll just do enough to make them easily visually intelligible. I’m using the lattice package for the plotting, but there are several other ways to do this as well. Something that we <em>won’t</em> get into here because it adds a layer of complication is to also characterize the environmental background - i.e., to assess the question of whether settlement locations comprise a random sample of the the available landscape or instead focus on certain kinds of locations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># commands: summary(), lattice::bwplot()</span>
+
+<span class="kw">summary</span>(sites_vals$period)<span class="co">#check the sample size for each period (I&#39;ve done this and manually incorporated it in the boxplot labels)</span></code></pre></div>
+<pre><code>##    EIA GalRom 
+##     94    491</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">elevplot &lt;-<span class="st"> </span><span class="kw">bwplot</span>(areaDEM ~<span class="st"> </span>period,   <span class="co"># Here we&#39;re writing the boxplot to an object for later use (if you just want to display it, simply run the code without writing to an object)</span>
+                   <span class="dt">data =</span> <span class="kw">data.frame</span>(sites_vals), 
+                   <span class="dt">notch =</span> <span class="ot">TRUE</span>, 
+                   <span class="dt">pch =</span> <span class="st">&quot;|&quot;</span>, 
+                   <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>, 
+                   <span class="dt">box.ratio =</span> <span class="fl">0.25</span>, 
+                   <span class="dt">par.settings =</span> <span class="kw">list</span>(
+                     <span class="dt">box.rectangle =</span> <span class="kw">list</span>(
+                       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>))),  <span class="co">#to maintain a visual link to our map, we&#39;ll plot the box outlines with the same color scheme</span>
+                   <span class="dt">ylab =</span> <span class="st">&quot;masl&quot;</span>, 
+                   <span class="dt">main=</span><span class="st">&quot;Elevation&quot;</span>,
+                   <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">x =</span> <span class="kw">list</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Early Iron Age</span><span class="ch">\n</span><span class="st">(n = 94)&quot;</span>,
+                                                     <span class="st">&quot;Gallo-Roman</span><span class="ch">\n</span><span class="st">(n = 491)&quot;</span>)),
+                                 <span class="dt">rot=</span><span class="dv">60</span>)) 
+elevplot  <span class="co">#examine the result to make sure everything is in order</span></code></pre></div>
+<p><img src="05_Contreras_files/figure-html/boxplot-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#repeat for slope </span>
+slopeplot &lt;-<span class="st"> </span><span class="kw">bwplot</span>(slope ~<span class="st"> </span>period,  
+                    <span class="dt">data =</span> <span class="kw">data.frame</span>(sites_vals), 
+                    <span class="dt">notch =</span> <span class="ot">TRUE</span>, 
+                    <span class="dt">pch =</span> <span class="st">&quot;|&quot;</span>, 
+                    <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>, 
+                    <span class="dt">box.ratio =</span> <span class="fl">0.25</span>, 
+                    <span class="dt">par.settings =</span> <span class="kw">list</span>(
+                     <span class="dt">box.rectangle =</span> <span class="kw">list</span>(
+                       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>))),
+                    <span class="dt">ylab =</span> <span class="st">&quot;slope (degrees)&quot;</span>,
+                    <span class="dt">main =</span> <span class="st">&quot;Slope&quot;</span>, 
+                    <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">x =</span> <span class="kw">list</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Early Iron Age</span><span class="ch">\n</span><span class="st">(n = 94)&quot;</span>,
+                                                     <span class="st">&quot;Gallo-Roman</span><span class="ch">\n</span><span class="st">(n = 491)&quot;</span>)),
+                                  <span class="dt">rot =</span> <span class="dv">60</span>))
+<span class="co"># view the plot</span>
+slopeplot</code></pre></div>
+<p><img src="05_Contreras_files/figure-html/boxplot-2.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#and then aspect</span>
+aspectplot &lt;-<span class="st"> </span><span class="kw">bwplot</span>(aspect ~<span class="st"> </span>period, 
+                     <span class="dt">data =</span> <span class="kw">data.frame</span>(sites_vals), 
+                     <span class="dt">notch =</span> <span class="ot">TRUE</span>, 
+                     <span class="dt">pch =</span> <span class="st">&quot;|&quot;</span>, 
+                     <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>, 
+                     <span class="dt">box.ratio =</span> <span class="fl">0.25</span>, 
+                     <span class="dt">par.settings =</span> <span class="kw">list</span>(
+                     <span class="dt">box.rectangle =</span> <span class="kw">list</span>(
+                       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>))),
+                     <span class="dt">ylab =</span> <span class="st">&quot;aspect (degrees)&quot;</span>, 
+                     <span class="dt">main =</span> <span class="st">&quot;Aspect&quot;</span>, 
+                     <span class="dt">scales =</span> <span class="kw">list</span>(<span class="dt">x =</span> <span class="kw">list</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Early Iron Age</span><span class="ch">\n</span><span class="st">(n = 94)&quot;</span>,
+                                                     <span class="st">&quot;Gallo-Roman</span><span class="ch">\n</span><span class="st">(n = 491)&quot;</span>)),
+                                   <span class="dt">rot=</span><span class="dv">60</span>))
+<span class="co"># view the plot</span>
+aspectplot</code></pre></div>
+<p><img src="05_Contreras_files/figure-html/boxplot-3.png" width="672" /></p>
+<p>We can already assess our hypothesis by looking at those plots individually, but since we’ve written them to objects we can also easily juxtapose them in a single plot and consider the results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># a bonus plotting problem: putting all three of these in one plot</span>
+<span class="co">#commands: gridExtra::grid.arrange </span>
+<span class="kw">require</span>(gridExtra)
+<span class="kw">grid.arrange</span>(elevplot, 
+             slopeplot, 
+             aspectplot,  
+             <span class="dt">nrow =</span> <span class="dv">1</span>, 
+             <span class="dt">ncol =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="05_Contreras_files/figure-html/bonus-1.png" width="672" /></p>
+<p>We can now quantitatively assess whatever visual assessments we made: it’s clear (the notches give a rough 95% confidence interval for the medians) that parts of the landscape of differing slope and elvation were preferred in the two periods (and, in contrast, that aspect was considered similarly or perhaps remained unimportant).</p>
+</div>
+<div id="summary-2" class="section level4">
+<h4><span class="header-section-number">6.0.1.7</span> Summary</h4>
+<p>What does all this mean for the archaeological question?Our hypothesis looks pretty compelling, at first glance. There is a marked change between the Early Iron Age and the Gallo-Roman Period in the parts of the landscape preferred, and the pattern is robust. That said, this should be seen as exploratory analysis, and common GIS caveats apply:</p>
+<ul>
+<li>the variables we’re looking at hardly comprise an exhaustive list,<br />
+</li>
+<li>there’s perhaps some danger of ecological fallacy with categories so broad,<br />
+</li>
+<li>there’s always some risk that some other variable that is related to - or at least covaries with - those we’ve examined is <em>actually</em> the causal one,<br />
+</li>
+<li>issues like data quality and landscape taphonomy ought to be considered,<br />
+</li>
+<li>we are privileging environmental variables because that data is easily available,<br />
+</li>
+<li>etc.</li>
+</ul>
+<p>However, those are problems of argument construction more than of method, and I find this a powerful set of tools with which to explore data and think about which arguments to test in more detail. Such issues might be addressed by further exploring the data (e.g., exploring other site variables, varying the buffer size, varying the summary statistics use to describe the landscape within the buffer), adding other data (e.g., rasters of distance-from-streams, soil type and depth, etc.), and thinking about what it would take to build a more robust argument.</p>
+<p>Finally, by way of considering what we might gain by using R as a GIS in this way (rather than QGIS, ArcGIS, etc) I want to highlight four of the steps we’ve gone through:</p>
+<ol style="list-style-type: decimal">
+<li>subsetting data<br />
+</li>
+<li>adding environmental (or any spatial) variables as raster data and summarizing them with respect to site locations<br />
+</li>
+<li>specifying analytical parameters (e.g., buffer size, summary statistics)</li>
+<li>visualising the distributions of environmental variables for the sites</li>
+</ol>
+<p>All of these provide flexibility in the particulars of the analysis, and the entire process is easily repeatable in varying permutations or with different data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.3.3 (2017-03-06)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## locale:
+## [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252   
+## [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C                      
+## [5] LC_TIME=English_Australia.1252    
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+## [1] gridExtra_2.2.1     rasterVis_0.41      latticeExtra_0.6-28
+## [4] RColorBrewer_1.1-2  lattice_0.20-34     raster_2.5-8       
+## [7] rgdal_1.2-5         sp_1.2-4           
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.10      knitr_1.15.1      magrittr_1.5     
+##  [4] viridisLite_0.2.0 stringr_1.2.0     tools_3.3.3      
+##  [7] parallel_3.3.3    grid_3.3.3        gtable_0.2.0     
+## [10] htmltools_0.3.5   yaml_2.1.14       rprojroot_1.2    
+## [13] digest_0.6.12     bookdown_0.3      evaluate_0.10    
+## [16] rmarkdown_1.4     stringi_1.1.3     backports_1.0.5  
+## [19] hexbin_1.27.1     zoo_1.7-14</code></pre>
+
+</div>
+</div>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/benmarwick/How-to-do-archaeological-science-using-R/05_Contreras.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

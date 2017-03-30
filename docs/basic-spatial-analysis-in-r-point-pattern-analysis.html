@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>How To Do Archaeological Science Using R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="How To Do Archaeological Science Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="How To Do Archaeological Science Using R" />
+  
+  <meta name="twitter:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  
+
+<meta name="author" content="Ben Marwick (editor)">
+
+
+<meta name="date" content="2017-03-29">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.7/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<link href="libs/leaflet-label-0.2.2/leaflet.label.css" rel="stylesheet" />
+<script src="libs/leaflet-label-0.2.2/leaflet.label.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4leaflet.js"></script>
+<script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/plotlyjs-1.16.3/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.16.3/plotly-latest.min.js"></script>
+<script src="libs/plotly-binding-4.5.6/plotly.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">How To Do Archaeological Science Using R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html"><i class="fa fa-check"></i><b>2</b> Basic spatial analysis in R: Point pattern analysis</a><ul>
+<li class="chapter" data-level="2.0.1" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#introduction-1"><i class="fa fa-check"></i><b>2.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.0.2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#summary"><i class="fa fa-check"></i><b>2.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><i class="fa fa-check"></i><b>3</b> Using linear models to explore children’s institutions in urban areas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#introduction-2"><i class="fa fa-check"></i><b>3.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.0.2" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#summary-1"><i class="fa fa-check"></i><b>3.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><i class="fa fa-check"></i><b>4</b> Agent-based modelling prehistoric landscape use with R and NetLogo</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#introduction-3"><i class="fa fa-check"></i><b>4.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.0.2" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#agent-based-modeling-with-netlogo-and-r"><i class="fa fa-check"></i><b>4.0.2</b> Agent-based modeling with NetLogo and R</a></li>
+<li class="chapter" data-level="4.0.3" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#starting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.3</b> Starting NetLogo from R</a></li>
+<li class="chapter" data-level="4.0.4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#running-a-netlogo-model-from-r"><i class="fa fa-check"></i><b>4.0.4</b> Running a NetLogo model from R</a></li>
+<li class="chapter" data-level="4.0.5" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#getting-data-back-from-netlogo"><i class="fa fa-check"></i><b>4.0.5</b> Getting data back from NetLogo</a></li>
+<li class="chapter" data-level="4.0.6" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#plotting-the-data"><i class="fa fa-check"></i><b>4.0.6</b> Plotting the data</a></li>
+<li class="chapter" data-level="4.0.7" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#quitting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.7</b> Quitting NetLogo from R</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><i class="fa fa-check"></i><b>5</b> Tempo Plots in R for Analysing Radiocarbon Dates</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeological-motivation"><i class="fa fa-check"></i><b>5.0.1</b> Archaeological Motivation</a></li>
+<li class="chapter" data-level="5.0.2" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#obtain-mcmc-output-from-calibration-software"><i class="fa fa-check"></i><b>5.0.2</b> Obtain MCMC Output from Calibration Software</a></li>
+<li class="chapter" data-level="5.0.3" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#read-oxcal-mcmc-output"><i class="fa fa-check"></i><b>5.0.3</b> Read OxCal MCMC Output</a></li>
+<li class="chapter" data-level="5.0.4" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#select-and-confirm-columns-to-plot"><i class="fa fa-check"></i><b>5.0.4</b> Select and Confirm Columns to Plot</a></li>
+<li class="chapter" data-level="5.0.5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#load-and-run-calc.tempo-function"><i class="fa fa-check"></i><b>5.0.5</b> Load and Run <code>calc.tempo</code> Function</a></li>
+<li class="chapter" data-level="5.0.6" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#check-calc.tempo-output"><i class="fa fa-check"></i><b>5.0.6</b> Check <code>calc.tempo</code> Output</a></li>
+<li class="chapter" data-level="5.0.7" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#example-plot-with-plot.tempo"><i class="fa fa-check"></i><b>5.0.7</b> Example Plot with <code>plot.tempo</code></a></li>
+<li class="chapter" data-level="5.0.8" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeophases-software"><i class="fa fa-check"></i><b>5.0.8</b> ArchaeoPhases software</a></li>
+<li class="chapter" data-level="5.0.9" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#demo-files"><i class="fa fa-check"></i><b>5.0.9</b> Demo Files</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html"><i class="fa fa-check"></i><b>6</b> Using R as a GIS: working with raster and vector data</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html#introduction-4"><i class="fa fa-check"></i><b>6.0.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><i class="fa fa-check"></i><b>7</b> Using R to analyse occupation as a function of geographical variables using logistic regression.</a><ul>
+<li class="chapter" data-level="7.1" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html"><i class="fa fa-check"></i><b>8</b> Landscape-based Hypothesis Testing in R</a><ul>
+<li class="chapter" data-level="8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#introduction-6"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#learning-goals"><i class="fa fa-check"></i><b>8.2</b> Learning goals</a></li>
+<li class="chapter" data-level="8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#loading-necessary-packages"><i class="fa fa-check"></i><b>8.3</b> Loading necessary packages</a></li>
+<li class="chapter" data-level="8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#defining-the-study-area"><i class="fa fa-check"></i><b>8.4</b> Defining the study area</a></li>
+<li class="chapter" data-level="8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#reading-site-locations-from-a-table-and-cropping-to-a-study-area"><i class="fa fa-check"></i><b>8.5</b> Reading “site” locations from a table and cropping to a study area</a></li>
+<li class="chapter" data-level="8.6" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#visualizing-site-locations"><i class="fa fa-check"></i><b>8.6</b> Visualizing site locations</a></li>
+<li class="chapter" data-level="8.7" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#downloading-landscape-data-with-feddata"><i class="fa fa-check"></i><b>8.7</b> Downloading landscape data with <em>FedData</em></a></li>
+<li class="chapter" data-level="8.8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#are-sites-situated-based-on-elevation"><i class="fa fa-check"></i><b>8.8</b> Are sites situated based on elevation?</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#extract-site-elevations"><i class="fa fa-check"></i><b>8.8.1</b> Extract site elevations</a></li>
+<li class="chapter" data-level="8.8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#calculate-kernel-density-curves-for-sites-and-landscape"><i class="fa fa-check"></i><b>8.8.2</b> Calculate kernel density curves for sites and landscape</a></li>
+<li class="chapter" data-level="8.8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#plot-the-kernel-density-curves"><i class="fa fa-check"></i><b>8.8.3</b> Plot the kernel density curves</a></li>
+<li class="chapter" data-level="8.8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#mann-whitney-u-test-comparing-non-normal-distributions"><i class="fa fa-check"></i><b>8.8.4</b> Mann-Whitney U test comparing non-normal distributions</a></li>
+<li class="chapter" data-level="8.8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#references-cited"><i class="fa fa-check"></i><b>8.8.5</b> References cited</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How To Do Archaeological Science Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="basic-spatial-analysis-in-r-point-pattern-analysis" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Basic spatial analysis in R: Point pattern analysis</h1>
+<p>Phil Riris (Institute of Archaeology, UCL)</p>
+<div id="introduction-1" class="section level3">
+<h3><span class="header-section-number">2.0.1</span> Introduction</h3>
+<p>This demo is prepared for the SAA 2017 forum at Vancouver “How to do archaeological science using R”. This demo has three goals:</p>
+<ol style="list-style-type: decimal">
+<li>Demonstrate how to load two types of spatial data (vectors and rasters) and plot them<br />
+</li>
+<li>Demonstrate data coercion into useful formats for spatial analysis<br />
+</li>
+<li>Explore spatial dependency based on a) between-point interaction, b) external covariates</li>
+</ol>
+<p>For more examples of spatial stats applied to archaeological questions, see:</p>
+<p>Riris, P. 2017. “Towards an artefact’s-eye view: Non-site analysis of discard patterns and lithic technology in Neotropical settings with a case from Misiones province, Argentina” Journal of Archaeological Science: Reports 11 DOI: <a href="http://dx.doi.org/10.1016/j.jasrep.2017.01.002" class="uri">http://dx.doi.org/10.1016/j.jasrep.2017.01.002</a></p>
+<div id="loading-and-plotting-spatial-data" class="section level4">
+<h4><span class="header-section-number">2.0.1.1</span> Loading and plotting spatial data</h4>
+<p>Suppose we have surveyed a prehistoric settlement landscape in full, and we are reasonably certain all major sites have been located by our awesome field team. We want to understand the empirical pattern in front of us, specifically how smaller sites not only outnumber, but also seem to group around larger and more important sites. How strong is this pattern? Does it hold equally across the whole study area? Can we explain the distribution of a type of site in terms of that of another?</p>
+<p>Here are the R packages that we will need to answer these questions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(spatstat) <span class="co"># Load packages</span>
+<span class="kw">require</span>(sp)
+<span class="kw">require</span>(maptools)
+<span class="kw">require</span>(rgdal)
+<span class="kw">require</span>(raster)</code></pre></div>
+<p>With time and money limited and excavation difficult, we can’t return to the field, so we have to resort to the data we have: in this case a basic distribution map! We will import our field data into R, briefly investigate it to ensure that it looks right:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">main.sites &lt;-<span class="st"> </span><span class="kw">readShapeSpatial</span>(<span class="st">&quot;main.sites.shp&quot;</span>) <span class="co"># Load our sites from shapefile</span>
+
+secondary.sites &lt;-<span class="st"> </span><span class="kw">readShapeSpatial</span>(<span class="st">&quot;secondary.sites.shp&quot;</span>)
+
+elev &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;elevation.tif&quot;</span>) <span class="co"># Load elevation map</span>
+
+<span class="kw">str</span>(main.sites) <span class="co"># Investigate and check that the files have loaded correctly.</span></code></pre></div>
+<pre><code>## Formal class &#39;SpatialPointsDataFrame&#39; [package &quot;sp&quot;] with 5 slots
+##   ..@ data       :&#39;data.frame&#39;:  21 obs. of  1 variable:
+##   .. ..$ marks: Factor w/ 1 level &quot;Primary&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##   .. ..- attr(*, &quot;data_types&quot;)= chr &quot;C&quot;
+##   ..@ coords.nrs : num(0) 
+##   ..@ coords     : num [1:21, 1:2] 0.0442 0.4661 0.8143 0.3285 0.7165 ...
+##   .. ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. .. ..$ : chr [1:21] &quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; ...
+##   .. .. ..$ : chr [1:2] &quot;coords.x1&quot; &quot;coords.x2&quot;
+##   ..@ bbox       : num [1:2, 1:2] 0.0314 0.0483 0.9766 0.9296
+##   .. ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. .. ..$ : chr [1:2] &quot;coords.x1&quot; &quot;coords.x2&quot;
+##   .. .. ..$ : chr [1:2] &quot;min&quot; &quot;max&quot;
+##   ..@ proj4string:Formal class &#39;CRS&#39; [package &quot;sp&quot;] with 1 slot
+##   .. .. ..@ projargs: chr NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(secondary.sites)</code></pre></div>
+<pre><code>## Formal class &#39;SpatialPointsDataFrame&#39; [package &quot;sp&quot;] with 5 slots
+##   ..@ data       :&#39;data.frame&#39;:  105 obs. of  1 variable:
+##   .. ..$ marks: Factor w/ 1 level &quot;Secondary&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##   .. ..- attr(*, &quot;data_types&quot;)= chr &quot;C&quot;
+##   ..@ coords.nrs : num(0) 
+##   ..@ coords     : num [1:105, 1:2] 0.0432 0.1002 0.1007 0.0414 0.4581 ...
+##   .. ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. .. ..$ : chr [1:105] &quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; ...
+##   .. .. ..$ : chr [1:2] &quot;coords.x1&quot; &quot;coords.x2&quot;
+##   ..@ bbox       : num [1:2, 1:2] 0.00799 0.01278 0.9964 0.98552
+##   .. ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. .. ..$ : chr [1:2] &quot;coords.x1&quot; &quot;coords.x2&quot;
+##   .. .. ..$ : chr [1:2] &quot;min&quot; &quot;max&quot;
+##   ..@ proj4string:Formal class &#39;CRS&#39; [package &quot;sp&quot;] with 1 slot
+##   .. .. ..@ projargs: chr NA</code></pre>
+<p>With the data imported and checked, we can make a simple exploratory plot:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># png(filename = paste0(getwd(), &quot;/&quot;, &quot;Sites.png&quot;), </span>
+<span class="co">#     width = 600, </span>
+<span class="co">#     height = 600, </span>
+<span class="co">#     units = &quot;px&quot;)</span>
+
+<span class="kw">plot</span>(elev, 
+     <span class="dt">main =</span> <span class="st">&quot;Study Area&quot;</span>, 
+     <span class="dt">axes =</span> <span class="ot">FALSE</span>) <span class="co"># Inspect data</span>
+
+<span class="kw">plot</span>(main.sites, 
+     <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, 
+     <span class="dt">pch =</span> <span class="dv">16</span>, 
+     <span class="dt">add =</span> <span class="ot">TRUE</span>)
+
+<span class="kw">plot</span>(secondary.sites, 
+     <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, 
+     <span class="dt">pch =</span> <span class="dv">17</span>, 
+     <span class="dt">add =</span> <span class="ot">TRUE</span>)
+
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, 
+       <span class="dt">title =</span> <span class="st">&quot;Site types&quot;</span>, 
+              <span class="kw">c</span>(<span class="st">&quot;Primary&quot;</span>, <span class="st">&quot;Secondary&quot;</span>), 
+       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">16</span>, <span class="dv">17</span>), 
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>))</code></pre></div>
+<p><img src="01_Riris_files/figure-html/inspect-data-with-plots-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># dev.off()</span></code></pre></div>
+<!-- ![](Sites.png) -->
+</div>
+<div id="querying-spatial-data" class="section level4">
+<h4><span class="header-section-number">2.0.1.2</span> Querying spatial data</h4>
+<p>For visualisation of raw patterns and classic exploratory tools we must coerce our data into a ‘ppp’ (planar point pattern) object for spatial statistics using the spatstat library, and then compute the intensity of the data (or ‘stuff per unit area’):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">main.pp &lt;-<span class="st"> </span><span class="kw">as.ppp</span>(main.sites) <span class="co"># Coerce into &#39;ppp&#39; object for spatial statistics</span>
+secondary.pp &lt;-<span class="st"> </span><span class="kw">as.ppp</span>(secondary.sites)
+
+sites.pp &lt;-<span class="st"> </span><span class="kw">superimpose</span>(main.pp, secondary.pp)
+
+<span class="kw">intensity</span>(sites.pp) <span class="co"># Measure intensity of different patterns</span></code></pre></div>
+<pre><code>##   Primary Secondary 
+##  21.84156 109.20781</code></pre>
+<p>We can also compute the intesity for all sites together:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">allsites &lt;-<span class="st"> </span><span class="kw">unmark</span>(sites.pp) <span class="co"># removes &quot;marks&quot; (i.e. descriptors) from point pattern</span>
+
+<span class="kw">intensity</span>(allsites) <span class="co"># Intensity (points/unit of area) = 131.0494</span></code></pre></div>
+<pre><code>## [1] 131.0494</code></pre>
+<p>This is not very informative on its own - an abstract number. Let’s see if we can get more insights from additional visualisations and stats:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d.sites &lt;-<span class="st"> </span><span class="kw">density.ppp</span>(sites.pp) <span class="co"># Overall density of all points in our data</span>
+
+<span class="kw">plot</span>(d.sites, <span class="dt">main =</span> <span class="st">&quot;Density of all sites&quot;</span>) <span class="co"># Plot interpolated values</span>
+<span class="kw">plot</span>(sites.pp, <span class="dt">add =</span> T)</code></pre></div>
+<p><img src="01_Riris_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>For numeric marks (e.g. number of structures per settlement) we would use <code>smooth.ppp()</code> function. But is this informative on its own? We have two different types of site.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="co"># Set number of plotting rows to 1 and number of columns to 2</span>
+ 
+<span class="kw">plot</span>(<span class="kw">density</span>(main.pp), <span class="dt">main =</span> <span class="st">&quot;Density of primary settlements&quot;</span>)
+<span class="kw">plot</span>(<span class="kw">density</span>(secondary.pp), <span class="dt">main =</span> <span class="st">&quot;Density of satellite settlements&quot;</span>)</code></pre></div>
+<p><img src="01_Riris_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Visualisations alone can be misleading. The patterns are clearly related, but how do we formally characterise this? First, it’s important to make note of any significant spatial relationships:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">clarkevans.test</span>(secondary.pp, <span class="dt">correction =</span> <span class="kw">c</span>(<span class="st">&quot;Donnelly&quot;</span>), <span class="dt">nsim =</span> <span class="dv">999</span>)</code></pre></div>
+<pre><code>## 
+##  Clark-Evans test
+##  Donnelly correction
+##  Monte Carlo test based on 999 simulations of CSR with fixed n
+## 
+## data:  secondary.pp
+## R = 0.65946, p-value = 0.002
+## alternative hypothesis: two-sided</code></pre>
+<p>R &lt; 1 among secondary settlements</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">clarkevans.test</span>(main.pp, <span class="dt">correction =</span> <span class="kw">c</span>(<span class="st">&quot;Donnelly&quot;</span>), <span class="dt">nsim =</span> <span class="dv">999</span>) </code></pre></div>
+<pre><code>## 
+##  Clark-Evans test
+##  Donnelly correction
+##  Monte Carlo test based on 999 simulations of CSR with fixed n
+## 
+## data:  main.pp
+## R = 1.053, p-value = 0.722
+## alternative hypothesis: two-sided</code></pre>
+<p>R &gt; 1 among primary sites, but not significant</p>
+<p>Tentative conclusion: there are two different processes creating the observed distribution of sites</p>
+</div>
+<div id="exploring-spatial-relationships" class="section level4">
+<h4><span class="header-section-number">2.0.1.3</span> Exploring spatial relationships</h4>
+<p>More formally, we can state our null hypothesis as: Primary and secondary sites are realisations of two independent point processes (different cultural strategies?)</p>
+<p>A point process is simply a process (random or otherwise) that generates an empirical pattern.</p>
+<p>We know in this case that they are almost certainly related, but it is always worthwhile to go through the motions in case of anything unexpected cropping up.</p>
+<p>A good place to start is bivariate spatial statistics such as the bivariate pair-correlation function. It tests for clustering or dispersion between two point patterns, i.e. the influence of one on the other.</p>
+<p>The “classic” pair-correlation function and its ancestor Ripley’s K are both univariate, but still worth using. However, here, we focus on interaction and dependency between two site-types.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">pcfcross</span>(
+  sites.pp, 
+  <span class="dt">divisor =</span> <span class="st">&quot;d&quot;</span>, 
+  <span class="dt">correction =</span> <span class="st">&quot;Ripley&quot;</span>), 
+  <span class="dt">main =</span> <span class="st">&quot;Bivariate pair-correlation function&quot;</span>)</code></pre></div>
+<p><img src="01_Riris_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Empirical pattern obviously differs greatly from function under spatial randomness: <code>g(pois)</code>, but how greatly?</p>
+<p>We can use the same approach and simulate envelopes of significance to compare agains the empirical pattern.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bivar &lt;-<span class="st"> </span><span class="kw">envelope</span>(
+  <span class="dt">fun =</span> pcfcross, 
+  sites.pp, 
+  <span class="dt">divisor =</span> <span class="st">&quot;d&quot;</span>, 
+  <span class="dt">nsim =</span> <span class="dv">99</span>, 
+  <span class="dt">correction =</span> <span class="kw">c</span>(<span class="st">&quot;Ripley&quot;</span>)
+  ) </code></pre></div>
+<pre><code>## Generating 99 simulations of CSR  ...
+## 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+## 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76,
+## 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,  99.
+## 
+## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(bivar, <span class="dt">main =</span> <span class="st">&quot;Pair-correlation function, with simulation envelope&quot;</span>)</code></pre></div>
+<p><img src="01_Riris_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>This function shows us the following: very strong association at short ranges (up to 10 km), but around 12 km and 16-17 km there are actually fewer secondary sites than expected. A univariate function shows this dispersion to be present in the whole dataset. In fact, this matches the findings of the Clark-Evans NN test.</p>
+<p>What may have caused secondary sites to be clustered to primary sites, but primary sites to be dispersed?</p>
+<p>Now we know: a) the distribution of sites varies in space, b) the presence of one type of site is tied to the presence of another.</p>
+<p>We can now take the step from exploratory spatial analysis to confirmatory.</p>
+</div>
+<div id="point-process-modelling" class="section level4">
+<h4><span class="header-section-number">2.0.1.4</span> Point process modelling</h4>
+<p>Define a spatstat window object for primary sites, and compute a kernel density estimate of primary settlement sites, to act as covariate, then fit point process model with the covariate:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pwin &lt;-<span class="st"> </span><span class="kw">as.owin</span>(<span class="kw">c</span>(-<span class="fl">0.1</span>, <span class="fl">1.1</span>, -<span class="fl">0.1</span>, <span class="fl">1.1</span>)) <span class="co"># </span>
+
+main.pp$window &lt;-<span class="st"> </span>pwin <span class="co"># Assign window</span>
+
+pden &lt;-<span class="st"> </span><span class="kw">density</span>(main.pp) <span class="co"># Kernel density estimate of primary settlement sites, to act as covariate</span>
+
+fit.sec &lt;-<span class="st"> </span><span class="kw">ppm</span>(<span class="kw">unmark</span>(secondary.pp), ~<span class="st"> </span>Cov1, <span class="dt">covariates =</span> <span class="kw">list</span>(<span class="dt">Cov1 =</span> pden)) <span class="co"># Fit point process model with the covariate</span></code></pre></div>
+<p>This appears to be somewhat acceptable model; locations of secondary sites seem to depend on those of primary sites. But how good is this fit?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># png(filename = &quot;density.png&quot;, width = 600, height = 600, units = &quot;px&quot;)</span>
+
+<span class="kw">plot</span>(<span class="kw">predict</span>(fit.sec), 
+     <span class="dt">main=</span><span class="st">&quot;Predicted distribution of secondary settlements&quot;</span>, 
+     <span class="dt">col =</span> <span class="kw">rainbow</span>(<span class="dv">255</span>))
+
+<span class="kw">points</span>(secondary.pp) <span class="co"># Appears to be somewhat acceptable model;</span></code></pre></div>
+<p><img src="01_Riris_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">                  <span class="co"># locations of secondary sites seem to depend</span>
+                  <span class="co"># on those of primary sites! But how good is this fit?</span>
+
+<span class="co">#dev.off()</span></code></pre></div>
+<!-- ![](density.png) -->
+<p>The Residual K function indicates that the locations of satellite settlements, although spatially autocorrelated with the principal settlements, are poorly explained by using only this covariate. Although a good fit is found between ~ 14 and ~18 km (the purple lines), at scales above and below this narrow band there is both significantly more dispersion and clustering, respectively. What may explain this statistical pattern?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.res &lt;-<span class="st"> </span><span class="kw">envelope</span>(
+  <span class="dt">fun =</span> Kres, 
+  secondary.pp, 
+  <span class="dt">model =</span> fit.sec, 
+  <span class="dt">nsim =</span> <span class="dv">19</span>, 
+  <span class="dt">correction =</span> <span class="kw">c</span>(<span class="st">&quot;Ripley&quot;</span>)) <span class="co"># Examine </span></code></pre></div>
+<pre><code>## Generating 19 simulations of CSR  ...
+## 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,  19.
+## 
+## Done.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="co"># Plot with two columns</span>
+
+<span class="co"># png(filename = &quot;statplot.png&quot;, width = 600, height = 600, units = &quot;px&quot;)</span>
+
+<span class="kw">plot</span>(fit.res, <span class="dt">main=</span><span class="st">&quot;Residual K&quot;</span>)
+
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">0.14</span>, <span class="dt">col =</span> <span class="st">&quot;purple&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">0.18</span>, <span class="dt">col =</span> <span class="st">&quot;purple&quot;</span>)
+
+<span class="kw">plot</span>(<span class="kw">predict</span>(fit.sec), <span class="dt">main =</span> <span class="st">&quot;Predicted distribution&quot;</span>, <span class="dt">col =</span> <span class="kw">rainbow</span>(<span class="dv">255</span>))
+<span class="kw">points</span>(secondary.pp)
+
+<span class="co"># dev.off()</span>
+
+<span class="kw">plot</span>(fit.res, <span class="dt">main =</span> <span class="st">&quot;Residual K&quot;</span>)
+
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">0.14</span>, <span class="dt">col =</span> <span class="st">&quot;purple&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">0.18</span>, <span class="dt">col =</span> <span class="st">&quot;purple&quot;</span>)
+
+<span class="kw">plot</span>(<span class="kw">predict</span>(fit.sec), <span class="dt">main =</span> <span class="st">&quot;Predicted distribution&quot;</span>, <span class="dt">col =</span> <span class="kw">rainbow</span>(<span class="dv">255</span>))
+<span class="kw">points</span>(secondary.pp)</code></pre></div>
+<p><img src="01_Riris_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="01_Riris_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+</div>
+</div>
+<div id="summary" class="section level3">
+<h3><span class="header-section-number">2.0.2</span> Summary</h3>
+<p>This exercise invites us to:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Think critically about the relationships we think we see in our data,<br />
+</li>
+<li>Formalise our hypotheses about the archaeological record and test them,<br />
+</li>
+<li>Pursue further data collection and analysis when we are proven wrong.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.3.3 (2017-03-06)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## locale:
+## [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252   
+## [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C                      
+## [5] LC_TIME=English_Australia.1252    
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+## [1] raster_2.5-8    rgdal_1.2-5     maptools_0.9-2  sp_1.2-4       
+## [5] spatstat_1.50-0 rpart_4.1-10    nlme_3.1-131   
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.10         knitr_1.15.1         tensor_1.5          
+##  [4] magrittr_1.5         spatstat.utils_1.4-1 lattice_0.20-34     
+##  [7] stringr_1.2.0        tools_3.3.3          grid_3.3.3          
+## [10] mgcv_1.8-17          deldir_0.1-12        htmltools_0.3.5     
+## [13] yaml_2.1.14          abind_1.4-5          goftest_1.0-4       
+## [16] rprojroot_1.2        digest_0.6.12        bookdown_0.3        
+## [19] Matrix_1.2-8         fftwtools_0.9-8      evaluate_0.10       
+## [22] rmarkdown_1.4        polyclip_1.6-1       stringi_1.1.3       
+## [25] backports_1.0.5      foreign_0.8-67</code></pre>
+
+</div>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/benmarwick/How-to-do-archaeological-science-using-R/01_Riris.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

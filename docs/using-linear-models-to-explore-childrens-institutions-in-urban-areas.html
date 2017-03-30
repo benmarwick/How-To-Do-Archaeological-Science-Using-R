@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>How To Do Archaeological Science Using R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="How To Do Archaeological Science Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="How To Do Archaeological Science Using R" />
+  
+  <meta name="twitter:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  
+
+<meta name="author" content="Ben Marwick (editor)">
+
+
+<meta name="date" content="2017-03-29">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="basic-spatial-analysis-in-r-point-pattern-analysis.html">
+<link rel="next" href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.7/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<link href="libs/leaflet-label-0.2.2/leaflet.label.css" rel="stylesheet" />
+<script src="libs/leaflet-label-0.2.2/leaflet.label.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4leaflet.js"></script>
+<script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/plotlyjs-1.16.3/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.16.3/plotly-latest.min.js"></script>
+<script src="libs/plotly-binding-4.5.6/plotly.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">How To Do Archaeological Science Using R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html"><i class="fa fa-check"></i><b>2</b> Basic spatial analysis in R: Point pattern analysis</a><ul>
+<li class="chapter" data-level="2.0.1" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#introduction-1"><i class="fa fa-check"></i><b>2.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.0.2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#summary"><i class="fa fa-check"></i><b>2.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><i class="fa fa-check"></i><b>3</b> Using linear models to explore children’s institutions in urban areas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#introduction-2"><i class="fa fa-check"></i><b>3.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.0.2" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#summary-1"><i class="fa fa-check"></i><b>3.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><i class="fa fa-check"></i><b>4</b> Agent-based modelling prehistoric landscape use with R and NetLogo</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#introduction-3"><i class="fa fa-check"></i><b>4.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.0.2" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#agent-based-modeling-with-netlogo-and-r"><i class="fa fa-check"></i><b>4.0.2</b> Agent-based modeling with NetLogo and R</a></li>
+<li class="chapter" data-level="4.0.3" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#starting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.3</b> Starting NetLogo from R</a></li>
+<li class="chapter" data-level="4.0.4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#running-a-netlogo-model-from-r"><i class="fa fa-check"></i><b>4.0.4</b> Running a NetLogo model from R</a></li>
+<li class="chapter" data-level="4.0.5" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#getting-data-back-from-netlogo"><i class="fa fa-check"></i><b>4.0.5</b> Getting data back from NetLogo</a></li>
+<li class="chapter" data-level="4.0.6" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#plotting-the-data"><i class="fa fa-check"></i><b>4.0.6</b> Plotting the data</a></li>
+<li class="chapter" data-level="4.0.7" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#quitting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.7</b> Quitting NetLogo from R</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><i class="fa fa-check"></i><b>5</b> Tempo Plots in R for Analysing Radiocarbon Dates</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeological-motivation"><i class="fa fa-check"></i><b>5.0.1</b> Archaeological Motivation</a></li>
+<li class="chapter" data-level="5.0.2" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#obtain-mcmc-output-from-calibration-software"><i class="fa fa-check"></i><b>5.0.2</b> Obtain MCMC Output from Calibration Software</a></li>
+<li class="chapter" data-level="5.0.3" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#read-oxcal-mcmc-output"><i class="fa fa-check"></i><b>5.0.3</b> Read OxCal MCMC Output</a></li>
+<li class="chapter" data-level="5.0.4" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#select-and-confirm-columns-to-plot"><i class="fa fa-check"></i><b>5.0.4</b> Select and Confirm Columns to Plot</a></li>
+<li class="chapter" data-level="5.0.5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#load-and-run-calc.tempo-function"><i class="fa fa-check"></i><b>5.0.5</b> Load and Run <code>calc.tempo</code> Function</a></li>
+<li class="chapter" data-level="5.0.6" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#check-calc.tempo-output"><i class="fa fa-check"></i><b>5.0.6</b> Check <code>calc.tempo</code> Output</a></li>
+<li class="chapter" data-level="5.0.7" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#example-plot-with-plot.tempo"><i class="fa fa-check"></i><b>5.0.7</b> Example Plot with <code>plot.tempo</code></a></li>
+<li class="chapter" data-level="5.0.8" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeophases-software"><i class="fa fa-check"></i><b>5.0.8</b> ArchaeoPhases software</a></li>
+<li class="chapter" data-level="5.0.9" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#demo-files"><i class="fa fa-check"></i><b>5.0.9</b> Demo Files</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html"><i class="fa fa-check"></i><b>6</b> Using R as a GIS: working with raster and vector data</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html#introduction-4"><i class="fa fa-check"></i><b>6.0.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><i class="fa fa-check"></i><b>7</b> Using R to analyse occupation as a function of geographical variables using logistic regression.</a><ul>
+<li class="chapter" data-level="7.1" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html"><i class="fa fa-check"></i><b>8</b> Landscape-based Hypothesis Testing in R</a><ul>
+<li class="chapter" data-level="8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#introduction-6"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#learning-goals"><i class="fa fa-check"></i><b>8.2</b> Learning goals</a></li>
+<li class="chapter" data-level="8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#loading-necessary-packages"><i class="fa fa-check"></i><b>8.3</b> Loading necessary packages</a></li>
+<li class="chapter" data-level="8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#defining-the-study-area"><i class="fa fa-check"></i><b>8.4</b> Defining the study area</a></li>
+<li class="chapter" data-level="8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#reading-site-locations-from-a-table-and-cropping-to-a-study-area"><i class="fa fa-check"></i><b>8.5</b> Reading “site” locations from a table and cropping to a study area</a></li>
+<li class="chapter" data-level="8.6" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#visualizing-site-locations"><i class="fa fa-check"></i><b>8.6</b> Visualizing site locations</a></li>
+<li class="chapter" data-level="8.7" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#downloading-landscape-data-with-feddata"><i class="fa fa-check"></i><b>8.7</b> Downloading landscape data with <em>FedData</em></a></li>
+<li class="chapter" data-level="8.8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#are-sites-situated-based-on-elevation"><i class="fa fa-check"></i><b>8.8</b> Are sites situated based on elevation?</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#extract-site-elevations"><i class="fa fa-check"></i><b>8.8.1</b> Extract site elevations</a></li>
+<li class="chapter" data-level="8.8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#calculate-kernel-density-curves-for-sites-and-landscape"><i class="fa fa-check"></i><b>8.8.2</b> Calculate kernel density curves for sites and landscape</a></li>
+<li class="chapter" data-level="8.8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#plot-the-kernel-density-curves"><i class="fa fa-check"></i><b>8.8.3</b> Plot the kernel density curves</a></li>
+<li class="chapter" data-level="8.8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#mann-whitney-u-test-comparing-non-normal-distributions"><i class="fa fa-check"></i><b>8.8.4</b> Mann-Whitney U test comparing non-normal distributions</a></li>
+<li class="chapter" data-level="8.8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#references-cited"><i class="fa fa-check"></i><b>8.8.5</b> References cited</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How To Do Archaeological Science Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="using-linear-models-to-explore-childrens-institutions-in-urban-areas" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Using linear models to explore children’s institutions in urban areas</h1>
+<p>Paulina Przystupa</p>
+<div id="introduction-2" class="section level3">
+<h3><span class="header-section-number">3.0.1</span> Introduction</h3>
+<p>Hi, my name is Paulina and I was interested in looking at the placement of children’s institutions through time in relation to urban areas. Historical documents suggest that in the United States starting in the late 1800s and into the 1900s more and more Americans believed that rural and natural environments were good for raising children. These ideas started appearing in child-rearing literature initially aimed at middle-class parents. However, I wondered if these same beliefs applied to those who ran children’s institutions. Children’s institutions, such as orphanages and Native American Boarding schools, also rose to prominence at this time but were situated between the middle-class sensibilities of those forming such institutions and the practical service such places provided. To see if such institutions conformed to this idea I collected a sample of 62 children’s institutions, half Native American boarding schools, and half Orphanages to see if through time their relationship to urban areas changed. Specifically, I was interested in examining it as a linear trend, one where through time such institutions are built farther from urban areas.</p>
+<div id="import-the-data-into-r" class="section level4">
+<h4><span class="header-section-number">3.0.1.1</span> Import the data into R</h4>
+<p>After collecting my data, which consisted of a list of institutions, and finding out the distances, I used as-the-crow-flies distance to their city hall as my measure, I loaded the comma separated file or csv into R. You can save CSV files from excel and a lot of other workbook or table formats. You can also just load tables directly into R.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">child =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;Combined_Orph_NA_data.csv&quot;</span>)</code></pre></div>
+</div>
+<div id="exploratory-data-analysis" class="section level4">
+<h4><span class="header-section-number">3.0.1.2</span> Exploratory data analysis</h4>
+<p>I wanted to just look at the data together and see what the relationship to time was so I did a basic scatter plot</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(Distance_KM ~<span class="st"> </span>Year, 
+     <span class="dt">data =</span> child)</code></pre></div>
+<p><img src="02_Przystupa_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>It doesn’t look like a particularly strong trend but I can test this by fitting a linear regression model to see what is going on with my data using:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">child.lm =<span class="st"> </span><span class="kw">lm</span>(Distance_KM ~<span class="st"> </span>Year, 
+           <span class="dt">data =</span> child)
+<span class="kw">summary</span>(child.lm)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Distance_KM ~ Year, data = child)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -54.39 -39.15 -32.77 -10.56 580.95 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -556.8124  1021.2532  -0.545    0.588
+## Year           0.3148     0.5382   0.585    0.561
+## 
+## Residual standard error: 98.38 on 60 degrees of freedom
+## Multiple R-squared:  0.005668,   Adjusted R-squared:  -0.0109 
+## F-statistic: 0.342 on 1 and 60 DF,  p-value: 0.5609</code></pre>
+<p>This creates a linear regression of the dependent variable, distance in kilometers, to the independent variable time, as stated in years, and provides me with the coefficients for the intercept, which is listed under the Estimate and (intercept), and slope, which is the estimate under the year, as well as the R-squared values. R squared is a metric that allows us to understand how well the linear regression model explains our data. The call for linear model lm() includes two types of R squared, multiple and adjusted. It looks like for this case the multiple R-squared, or just R-squared, is .005 which means that only about half a percent of the data is predicted by our model. The adjusted R-squared includes the number of points used to create the model. Essentially it examines how meaningful the R is based on the n of your sample. This is so you can compare the strength of different models with different samples used to calculate them. It can go up or down depending on the sample. In this case, the adjusted-R squared does not improve when we adjust for the size of the sample. Lastly, the p-value, which is the liklihood that this is random, is nowhere near significant. So the combination of the p-value and my rather unhelpful R-squared values suggests there’s limited explanatory value in a linear regression for this sample combined sample.</p>
+</div>
+<div id="residuals" class="section level4">
+<h4><span class="header-section-number">3.0.1.3</span> Residuals</h4>
+<p>While I’m here I’ll also plot the residuals for the data set overall to see if there are any trends with those, which may alter my choice in data set or the methods I should apply to it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">child.res =<span class="st"> </span><span class="kw">resid</span>(child.lm)
+<span class="kw">plot</span>(child$Year, child.res)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="02_Przystupa_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(child.res~child$Year))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = child.res ~ child$Year)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -54.39 -39.15 -32.77 -10.56 580.95 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -4.299e-13  1.021e+03       0        1
+## child$Year   2.332e-16  5.382e-01       0        1
+## 
+## Residual standard error: 98.38 on 60 degrees of freedom
+## Multiple R-squared:  2.221e-32,  Adjusted R-squared:  -0.01667 
+## F-statistic: 1.332e-30 on 1 and 60 DF,  p-value: 1</code></pre>
+<p>Looking at the plot it doesn’t appear that there is any trend in the residuals and further more it has a p-value of 1 suggesting it is completely random. Which is what we want. If there were at trend in the residuals we might be looking at much more complicated data set and other statistical analysis of the data.</p>
+</div>
+<div id="subsetting-the-data" class="section level4">
+<h4><span class="header-section-number">3.0.1.4</span> Subsetting the data</h4>
+<p>However, as I noted earlier that I included two different types of children’s institution, so maybe each have different trends. To examine them separately I can use subset</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">NAB =<span class="st"> </span><span class="kw">subset</span>(child, 
+             Instit_Type ==<span class="st"> &quot;NAB&quot;</span>)
+EAO =<span class="st"> </span><span class="kw">subset</span>(child, 
+             Instit_Type ==<span class="st"> &quot;O&quot;</span>)</code></pre></div>
+<p>So now I can look at them separately, plotting distance per year for each institution</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(NAB$Distance_KM ~<span class="st"> </span>NAB$Year, 
+     <span class="dt">main =</span> <span class="st">&quot;Distance from urban area vs. year for Native American boarding schools&quot;</span>)
+<span class="kw">abline</span>(<span class="kw">lm</span>(NAB$Distance_KM~NAB$Year), 
+       <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="02_Przystupa_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(EAO$Distance_KM~EAO$Year, 
+     <span class="dt">main =</span> <span class="st">&quot;Distance from urban area vs. year for Orphanages&quot;</span>)
+<span class="kw">abline</span>(<span class="kw">lm</span>(EAO$Distance_KM~EAO$Year), 
+       <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="02_Przystupa_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p>This view looks like there may be some increasing trends but there are some significant outliers. Looking at the R-squared for those trend lines</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(NAB$Distance_KM ~<span class="st"> </span>NAB$Year))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = NAB$Distance_KM ~ NAB$Year)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -125.35  -61.93  -50.54    7.54  521.78 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -1922.736   2248.163  -0.855    0.399
+## NAB$Year        1.052      1.186   0.887    0.382
+## 
+## Residual standard error: 130.8 on 29 degrees of freedom
+## Multiple R-squared:  0.02641,    Adjusted R-squared:  -0.007167 
+## F-statistic: 0.7865 on 1 and 29 DF,  p-value: 0.3825</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(EAO$Distance_KM ~<span class="st"> </span>EAO$Year))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = EAO$Distance_KM ~ EAO$Year)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -11.499  -8.345  -5.816  -3.257 112.002 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -163.22363  310.73304  -0.525    0.603
+## EAO$Year       0.09112    0.16357   0.557    0.582
+## 
+## Residual standard error: 23.67 on 29 degrees of freedom
+## Multiple R-squared:  0.01059,    Adjusted R-squared:  -0.02353 
+## F-statistic: 0.3103 on 1 and 29 DF,  p-value: 0.5818</code></pre>
+</div>
+<div id="removing-outliers" class="section level4">
+<h4><span class="header-section-number">3.0.1.5</span> Removing outliers</h4>
+<p>The r-squared values are still really low and my p-values are not significant. So it might be useful to remove the outliers. However, it doesn’t look like they have outliers at the same distance so for the orphanages I’m only going to look at ones that were less than 50 km, which removes two of my locations, while for Native American boarding schools I looked at ones that were less than 100 km.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">NAB_no =<span class="st"> </span><span class="kw">subset</span>(NAB, NAB$Distance_KM &lt;<span class="st"> </span><span class="dv">100</span>)
+EAO_no =<span class="st"> </span><span class="kw">subset</span>(EAO, EAO$Distance_KM &lt;<span class="st"> </span><span class="dv">50</span>)</code></pre></div>
+<p>Then I re-plot them</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(NAB_no$Distance_KM~NAB_no$Year, 
+     <span class="dt">main =</span> <span class="st">&quot;Distance from urban area vs. year for Native American boarding schools, No Outliers&quot;</span>)
+<span class="kw">abline</span>(<span class="kw">lm</span>(NAB_no$Distance_KM ~<span class="st"> </span>NAB_no$Year), 
+       <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="02_Przystupa_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(EAO_no$Distance_KM~EAO_no$Year, 
+     <span class="dt">main =</span> <span class="st">&quot;Distance from urban area vs. year for Orphanages, No outliers&quot;</span>)
+<span class="kw">abline</span>(<span class="kw">lm</span>(EAO_no$Distance_KM ~<span class="st"> </span>EAO_no$Year), 
+       <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="02_Przystupa_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p>So some trends, perhaps ones I’m not very happy with considering one of them is negative , but lets look at a summary of the regression lines:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(NAB_no$Distance_KM ~<span class="st"> </span>NAB_no$Year))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = NAB_no$Distance_KM ~ NAB_no$Year)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -17.729 -12.717  -8.454  13.324  41.998 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 274.6597   353.0894   0.778    0.445
+## NAB_no$Year  -0.1360     0.1863  -0.730    0.473
+## 
+## Residual standard error: 18.23 on 22 degrees of freedom
+## Multiple R-squared:  0.02366,    Adjusted R-squared:  -0.02072 
+## F-statistic: 0.5331 on 1 and 22 DF,  p-value: 0.473</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(EAO_no$Distance_KM ~<span class="st"> </span>EAO_no$Year))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = EAO_no$Distance_KM ~ EAO_no$Year)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -4.018 -2.991 -1.268  1.083 12.644 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -55.77391   55.17205  -1.011    0.321
+## EAO_no$Year   0.03165    0.02904   1.090    0.285
+## 
+## Residual standard error: 4.013 on 27 degrees of freedom
+## Multiple R-squared:  0.04215,    Adjusted R-squared:  0.006675 
+## F-statistic: 1.188 on 1 and 27 DF,  p-value: 0.2853</code></pre>
+</div>
+</div>
+<div id="summary-1" class="section level3">
+<h3><span class="header-section-number">3.0.2</span> Summary</h3>
+<p>Unfortunately neither of those was significant either. So it looks like linear regression, regardless of whether the institutions are lumped together, institutions are separated by type, and whether or not they include outliers does not support the hypothesis that children’s homes were built farther from urban areas through time. They all have very low R-squared values and insignificant p-values. However, there may be some interesting differences examining the trends before and after 1900, which I explored in other presentations. So while linear regression might not fit this data other methods may help us to understand what sort of trend we may be seeing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.3.3 (2017-03-06)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## locale:
+## [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252   
+## [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C                      
+## [5] LC_TIME=English_Australia.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  base     
+## 
+## loaded via a namespace (and not attached):
+##  [1] backports_1.0.5 bookdown_0.3    magrittr_1.5    rprojroot_1.2  
+##  [5] tools_3.3.3     htmltools_0.3.5 yaml_2.1.14     Rcpp_0.12.10   
+##  [9] stringi_1.1.3   rmarkdown_1.4   knitr_1.15.1    methods_3.3.3  
+## [13] stringr_1.2.0   digest_0.6.12   evaluate_0.10</code></pre>
+
+</div>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="basic-spatial-analysis-in-r-point-pattern-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/benmarwick/How-to-do-archaeological-science-using-R/02_Przystupa.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

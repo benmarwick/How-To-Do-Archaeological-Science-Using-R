@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>How To Do Archaeological Science Using R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="How To Do Archaeological Science Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="How To Do Archaeological Science Using R" />
+  
+  <meta name="twitter:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  
+
+<meta name="author" content="Ben Marwick (editor)">
+
+
+<meta name="date" content="2017-03-29">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="using-r-as-a-gis-working-with-raster-and-vector-data.html">
+<link rel="next" href="landscape-based-hypothesis-testing-in-r.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.7/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<link href="libs/leaflet-label-0.2.2/leaflet.label.css" rel="stylesheet" />
+<script src="libs/leaflet-label-0.2.2/leaflet.label.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4leaflet.js"></script>
+<script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/plotlyjs-1.16.3/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.16.3/plotly-latest.min.js"></script>
+<script src="libs/plotly-binding-4.5.6/plotly.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">How To Do Archaeological Science Using R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html"><i class="fa fa-check"></i><b>2</b> Basic spatial analysis in R: Point pattern analysis</a><ul>
+<li class="chapter" data-level="2.0.1" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#introduction-1"><i class="fa fa-check"></i><b>2.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.0.2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#summary"><i class="fa fa-check"></i><b>2.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><i class="fa fa-check"></i><b>3</b> Using linear models to explore children’s institutions in urban areas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#introduction-2"><i class="fa fa-check"></i><b>3.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.0.2" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#summary-1"><i class="fa fa-check"></i><b>3.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><i class="fa fa-check"></i><b>4</b> Agent-based modelling prehistoric landscape use with R and NetLogo</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#introduction-3"><i class="fa fa-check"></i><b>4.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.0.2" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#agent-based-modeling-with-netlogo-and-r"><i class="fa fa-check"></i><b>4.0.2</b> Agent-based modeling with NetLogo and R</a></li>
+<li class="chapter" data-level="4.0.3" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#starting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.3</b> Starting NetLogo from R</a></li>
+<li class="chapter" data-level="4.0.4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#running-a-netlogo-model-from-r"><i class="fa fa-check"></i><b>4.0.4</b> Running a NetLogo model from R</a></li>
+<li class="chapter" data-level="4.0.5" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#getting-data-back-from-netlogo"><i class="fa fa-check"></i><b>4.0.5</b> Getting data back from NetLogo</a></li>
+<li class="chapter" data-level="4.0.6" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#plotting-the-data"><i class="fa fa-check"></i><b>4.0.6</b> Plotting the data</a></li>
+<li class="chapter" data-level="4.0.7" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#quitting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.7</b> Quitting NetLogo from R</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><i class="fa fa-check"></i><b>5</b> Tempo Plots in R for Analysing Radiocarbon Dates</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeological-motivation"><i class="fa fa-check"></i><b>5.0.1</b> Archaeological Motivation</a></li>
+<li class="chapter" data-level="5.0.2" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#obtain-mcmc-output-from-calibration-software"><i class="fa fa-check"></i><b>5.0.2</b> Obtain MCMC Output from Calibration Software</a></li>
+<li class="chapter" data-level="5.0.3" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#read-oxcal-mcmc-output"><i class="fa fa-check"></i><b>5.0.3</b> Read OxCal MCMC Output</a></li>
+<li class="chapter" data-level="5.0.4" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#select-and-confirm-columns-to-plot"><i class="fa fa-check"></i><b>5.0.4</b> Select and Confirm Columns to Plot</a></li>
+<li class="chapter" data-level="5.0.5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#load-and-run-calc.tempo-function"><i class="fa fa-check"></i><b>5.0.5</b> Load and Run <code>calc.tempo</code> Function</a></li>
+<li class="chapter" data-level="5.0.6" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#check-calc.tempo-output"><i class="fa fa-check"></i><b>5.0.6</b> Check <code>calc.tempo</code> Output</a></li>
+<li class="chapter" data-level="5.0.7" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#example-plot-with-plot.tempo"><i class="fa fa-check"></i><b>5.0.7</b> Example Plot with <code>plot.tempo</code></a></li>
+<li class="chapter" data-level="5.0.8" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeophases-software"><i class="fa fa-check"></i><b>5.0.8</b> ArchaeoPhases software</a></li>
+<li class="chapter" data-level="5.0.9" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#demo-files"><i class="fa fa-check"></i><b>5.0.9</b> Demo Files</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html"><i class="fa fa-check"></i><b>6</b> Using R as a GIS: working with raster and vector data</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html#introduction-4"><i class="fa fa-check"></i><b>6.0.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><i class="fa fa-check"></i><b>7</b> Using R to analyse occupation as a function of geographical variables using logistic regression.</a><ul>
+<li class="chapter" data-level="7.1" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html"><i class="fa fa-check"></i><b>8</b> Landscape-based Hypothesis Testing in R</a><ul>
+<li class="chapter" data-level="8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#introduction-6"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#learning-goals"><i class="fa fa-check"></i><b>8.2</b> Learning goals</a></li>
+<li class="chapter" data-level="8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#loading-necessary-packages"><i class="fa fa-check"></i><b>8.3</b> Loading necessary packages</a></li>
+<li class="chapter" data-level="8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#defining-the-study-area"><i class="fa fa-check"></i><b>8.4</b> Defining the study area</a></li>
+<li class="chapter" data-level="8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#reading-site-locations-from-a-table-and-cropping-to-a-study-area"><i class="fa fa-check"></i><b>8.5</b> Reading “site” locations from a table and cropping to a study area</a></li>
+<li class="chapter" data-level="8.6" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#visualizing-site-locations"><i class="fa fa-check"></i><b>8.6</b> Visualizing site locations</a></li>
+<li class="chapter" data-level="8.7" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#downloading-landscape-data-with-feddata"><i class="fa fa-check"></i><b>8.7</b> Downloading landscape data with <em>FedData</em></a></li>
+<li class="chapter" data-level="8.8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#are-sites-situated-based-on-elevation"><i class="fa fa-check"></i><b>8.8</b> Are sites situated based on elevation?</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#extract-site-elevations"><i class="fa fa-check"></i><b>8.8.1</b> Extract site elevations</a></li>
+<li class="chapter" data-level="8.8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#calculate-kernel-density-curves-for-sites-and-landscape"><i class="fa fa-check"></i><b>8.8.2</b> Calculate kernel density curves for sites and landscape</a></li>
+<li class="chapter" data-level="8.8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#plot-the-kernel-density-curves"><i class="fa fa-check"></i><b>8.8.3</b> Plot the kernel density curves</a></li>
+<li class="chapter" data-level="8.8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#mann-whitney-u-test-comparing-non-normal-distributions"><i class="fa fa-check"></i><b>8.8.4</b> Mann-Whitney U test comparing non-normal distributions</a></li>
+<li class="chapter" data-level="8.8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#references-cited"><i class="fa fa-check"></i><b>8.8.5</b> References cited</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How To Do Archaeological Science Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression." class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Using R to analyse occupation as a function of geographical variables using logistic regression.</h1>
+<p>Ariane Burke</p>
+<div id="introduction-5" class="section level2">
+<h2><span class="header-section-number">7.1</span> Introduction</h2>
+<p>This demonstration is based on research published in:</p>
+<p>Burke, Ariane, et al. 2014 Exploring the impact of climate variability during the Last Glacial Maximum on the pattern of human occupation of Iberia. Journal of Human Evolution 73:35-46. <a href="http://dx.doi.org/10.1016/j.jhevol.2014.06.003" class="uri">http://dx.doi.org/10.1016/j.jhevol.2014.06.003</a></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ----- Install  packages 
+<span class="kw">require</span>(car)  ## for vif (variance inflation test)
+<span class="co"># BM # we can install coefplot2 from:</span>
+<span class="co"># devtools::install_github(&quot;palday/coefplot2&quot;, subdir = &quot;pkg&quot;) # or </span>
+<span class="co"># install.packages(&quot;coefplot2&quot;,repos=&quot;http://www.math.mcmaster.ca/bolker/R&quot;,     type=&quot;source&quot;)</span>
+<span class="kw">require</span>(AICcmodavg) ## for AIC model selection
+<span class="kw">require</span>(MASS) ## for stepAIC
+<span class="kw">library</span>(coefplot2) ## for coefficient plot.</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Set file name
+fileName &lt;-<span class="st"> &quot;Test_Iberia.csv&quot;</span>
+
+## ----- Read in data
+dat &lt;-<span class="st"> </span><span class="kw">read.csv</span>(fileName, <span class="dt">header=</span>T) 
+
+## ----- View/check data
+<span class="kw">head</span>(dat)</code></pre></div>
+<pre><code>##             Name LGM       X       Y t_avg_y t_min_y slope elev p_avg_y
+## 1        Abauntz   1 -1.6333 43.0015    3.82    -8.2  8.27  241   64.13
+## 2 Aitzbitarte IV   1 -1.8956 43.2628    6.05    -6.2  3.37  493   50.40
+## 3       Altamira   1 -4.1190 43.3780    6.30    -5.1  8.06   92   59.89
+## 4         Amalda   1 -2.2047 43.2342    5.31    -6.6 26.16  112   60.40
+## 5       Ambrosio   1 -2.0991 37.8222    8.88    -3.1  7.25   85   61.86
+## 6        Arbreda   1  2.7468 42.1618    7.58    -5.4  4.31   83   55.08
+##   p_min_spr
+## 1     30.34
+## 2     24.92
+## 3     31.76
+## 4     29.76
+## 5     34.24
+## 6     27.64</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">library</span>(viridis)
+map_elev &lt;-<span class="st"> </span>
+<span class="kw">ggplot</span>(dat, 
+       <span class="kw">aes</span>(X, 
+           Y,
+           <span class="dt">colour =</span> elev)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>,
+             <span class="dt">shape =</span> <span class="dv">15</span>) +
+<span class="st">  </span><span class="kw">scale_color_viridis</span>() +
+<span class="st">  </span><span class="kw">theme_minimal</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">coord_equal</span>() +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Study area with elevation&quot;</span>)
+
+map_precip  &lt;-<span class="st"> </span>
+<span class="kw">ggplot</span>(dat, 
+       <span class="kw">aes</span>(X, 
+           Y,
+           <span class="dt">colour =</span> p_min_spr)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>,
+             <span class="dt">shape =</span> <span class="dv">15</span>) +
+<span class="st">    </span><span class="kw">scale_color_viridis</span>(<span class="dt">option =</span> <span class="st">&quot;C&quot;</span>) +
+<span class="st">  </span><span class="kw">theme_minimal</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">coord_equal</span>() +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Study area with precipitation&quot;</span>)
+
+<span class="kw">library</span>(gridExtra)
+<span class="kw">grid.arrange</span>(map_elev, map_precip)</code></pre></div>
+<p><img src="06_Burke_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">###  ----- Standardization of predictors
+dat1 &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(dat[,<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">4</span>)], (<span class="kw">scale</span>(dat[,-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">4</span>)]))))
+<span class="co">#dat2&lt;- dat2[,] ## removal of extra non informative variables</span>
+
+<span class="co"># Verification (make sure the vars are numerical)</span>
+<span class="kw">str</span>(dat1)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    2214 obs. of  10 variables:
+##  $ Name     : Factor w/ 2214 levels &quot;1&quot;,&quot;10&quot;,&quot;100&quot;,..: 2180 2181 2182 2183 2184 2185 2186 2187 2188 2189 ...
+##  $ LGM      : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ X        : num  -1.63 -1.9 -4.12 -2.2 -2.1 ...
+##  $ Y        : num  43 43.3 43.4 43.2 37.8 ...
+##  $ t_avg_y  : num  -1.136 -0.307 -0.214 -0.582 0.746 ...
+##  $ t_min_y  : num  -1.195 -0.58 -0.242 -0.703 0.372 ...
+##  $ slope    : num  0.484 -0.351 0.448 3.532 0.31 ...
+##  $ elev     : num  -0.85 -0.206 -1.231 -1.18 -1.249 ...
+##  $ p_avg_y  : num  0.1113 -1.0793 -0.2564 -0.2122 -0.0856 ...
+##  $ p_min_spr: num  -0.178 -0.9476 0.0237 -0.2603 0.3758 ...</code></pre>
+<p>Using all of the data including the zeros, which cannot be described as necessarily “true” zeroes, we introduce an artificial level of certainty regarding absences. This can bias results (King and Zeng, 2000; Dixon et al.,2005), (also see <a href="http://www2.unil.ch/biomapper/Download/Chefaoui-EcoMod-2008.pdf" class="uri">http://www2.unil.ch/biomapper/Download/Chefaoui-EcoMod-2008.pdf</a>)</p>
+<p>To reduce this uncertainy, we sample the zeros which we now call pseudo absences. Good practice is 10x the number of presences (=1000). We can bootstrap this if we want, but this 1000 samples should be sufficient. We will nonetheless need to report some sensitivity to the number of absences used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ----- Tease apart presences and absences, then select a subset of absences - recombine presences (all) and absences (sample)
+numAbsences &lt;-<span class="st"> </span><span class="dv">350</span> ## 10x presences
+
+Presences &lt;-<span class="st"> </span><span class="kw">subset</span>(dat1, dat1$LGM ==<span class="st"> </span><span class="dv">1</span>)
+Absences &lt;-<span class="st"> </span><span class="kw">subset</span>(dat1, dat1$LGM ==<span class="st"> </span><span class="dv">0</span>)[<span class="kw">sample</span>(<span class="kw">c</span>(<span class="dv">1</span>:<span class="kw">dim</span>(dat1)[<span class="dv">1</span>]), numAbsences),]
+
+## ----- Final data on which analyses will be run
+dat2 &lt;-<span class="st"> </span><span class="kw">rbind</span>(Presences, Absences)
+
+    ## ----- data table for forward selection (stepAIC)
+dat3 &lt;-<span class="st"> </span>dat2[,<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)]
+    ## ----- View/check data
+<span class="kw">head</span>(dat3)</code></pre></div>
+<pre><code>##   LGM    t_avg_y    t_min_y      slope       elev     p_avg_y   p_min_spr
+## 1   1 -1.1364478 -1.1949906  0.4840559 -0.8504833  0.11126454 -0.17797971
+## 2   1 -0.3069777 -0.5803098 -0.3508109 -0.2063003 -1.07927238 -0.94763063
+## 3   1 -0.2139877 -0.2422353  0.4482759 -1.2313694 -0.25638852  0.02366315
+## 4   1 -0.5822278 -0.7032459  3.5321719 -1.1802437 -0.21216610 -0.26034088
+## 5   1  0.7456684  0.3724455  0.3102673 -1.2492633 -0.08556859  0.37582815
+## 6   1  0.2621207 -0.3344375 -0.1906528 -1.2543759 -0.67346664 -0.56138515</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ----- MODELLING
+
+## ----- Define formulae
+form0 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM ~<span class="st"> </span><span class="dv">1</span>) <span class="co">#intercept only model</span>
+form1 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM ~<span class="st"> </span>Y +<span class="st"> </span>X)
+form2 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM ~<span class="st"> </span>elev +<span class="st"> </span>slope)
+form3 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM ~<span class="st"> </span>t_min_y)
+form4 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM ~<span class="st"> </span>elev +<span class="st"> </span>slope +<span class="st"> </span>p_min_spr)
+form5 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM ~<span class="st"> </span>p_min_spr +<span class="st"> </span>t_min_y)
+form6 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM ~<span class="st"> </span>t_avg_y +<span class="st"> </span>p_avg_y)
+form7 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM ~<span class="st"> </span>elev +<span class="st"> </span>slope +<span class="st"> </span>t_avg_y +<span class="st"> </span>p_avg_y)
+form8 &lt;-<span class="st"> </span><span class="kw">formula</span>(LGM~<span class="st"> </span>.) ## all variables for step-wise procedure
+## all variables for step-wise procedure</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ----- Build models
+mod<span class="fl">.0</span>  &lt;-<span class="st">  </span><span class="kw">glm</span>(form0, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat2)
+mod<span class="fl">.1</span>  &lt;-<span class="st">  </span><span class="kw">glm</span>(form1, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat2)
+mod<span class="fl">.2</span>  &lt;-<span class="st">  </span><span class="kw">glm</span>(form2, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat2)
+mod<span class="fl">.3</span>  &lt;-<span class="st">  </span><span class="kw">glm</span>(form3, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat2)
+mod<span class="fl">.4</span>  &lt;-<span class="st">  </span><span class="kw">glm</span>(form4, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat2)
+mod<span class="fl">.5</span>  &lt;-<span class="st">  </span><span class="kw">glm</span>(form5, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat2)
+mod<span class="fl">.6</span>  &lt;-<span class="st">  </span><span class="kw">glm</span>(form6, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat2)
+mod<span class="fl">.7</span>  &lt;-<span class="st">  </span><span class="kw">glm</span>(form7, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat2)
+mod<span class="fl">.8</span> &lt;-<span class="st">   </span><span class="kw">stepAIC</span>(<span class="kw">glm</span>(form8, <span class="dt">family =</span> binomial, <span class="dt">data =</span> dat3))</code></pre></div>
+<pre><code>## Start:  AIC=183.48
+## LGM ~ t_avg_y + t_min_y + slope + elev + p_avg_y + p_min_spr
+## 
+##             Df Deviance    AIC
+## - t_avg_y    1   169.62 181.62
+## - t_min_y    1   169.67 181.67
+## &lt;none&gt;           169.49 183.49
+## - p_avg_y    1   178.25 190.25
+## - slope      1   184.01 196.01
+## - p_min_spr  1   184.17 196.17
+## - elev       1   202.90 214.90
+## 
+## Step:  AIC=181.62
+## LGM ~ t_min_y + slope + elev + p_avg_y + p_min_spr
+## 
+##             Df Deviance    AIC
+## - t_min_y    1   169.70 179.70
+## &lt;none&gt;           169.62 181.62
+## - p_avg_y    1   182.47 192.47
+## - p_min_spr  1   184.77 194.77
+## - slope      1   186.20 196.20
+## - elev       1   202.91 212.91
+## 
+## Step:  AIC=179.7
+## LGM ~ slope + elev + p_avg_y + p_min_spr
+## 
+##             Df Deviance    AIC
+## &lt;none&gt;           169.70 179.70
+## - p_avg_y    1   183.41 191.41
+## - p_min_spr  1   185.89 193.89
+## - slope      1   186.80 194.80
+## - elev       1   202.91 210.91</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ----- Summarize AIC results, including weightings. Using modaicavg package.
+mods &lt;-
+<span class="st">  </span><span class="kw">list</span>(mod<span class="fl">.0</span>,
+       mod<span class="fl">.1</span>, 
+       mod<span class="fl">.2</span>, 
+       mod<span class="fl">.3</span>, 
+       mod<span class="fl">.4</span>, 
+       mod<span class="fl">.5</span>, 
+       mod<span class="fl">.6</span>, 
+       mod<span class="fl">.7</span>, 
+       mod<span class="fl">.8</span>)
+
+modnames &lt;-
+<span class="st">  </span><span class="kw">c</span>(<span class="st">&quot;mod.0&quot;</span>,
+  <span class="st">&quot;mod.1&quot;</span>,
+  <span class="st">&quot;mod.2&quot;</span>,
+  <span class="st">&quot;mod.3&quot;</span>,
+  <span class="st">&quot;mod.4&quot;</span>,
+  <span class="st">&quot;mod.5&quot;</span>,
+  <span class="st">&quot;mod.6&quot;</span>,
+  <span class="st">&quot;mod.7&quot;</span>,
+  <span class="st">&quot;mod.8&quot;</span>)
+
+<span class="kw">aictab</span>(mods, modnames, <span class="dt">second.ord =</span> T)</code></pre></div>
+<pre><code>## 
+## Model selection based on AICc:
+## 
+##       K   AICc Delta_AICc AICcWt Cum.Wt      LL
+## mod.8 5 179.86       0.00   0.99   0.99  -84.85
+## mod.4 4 191.52      11.66   0.00   1.00  -91.71
+## mod.2 3 191.96      12.10   0.00   1.00  -92.95
+## mod.7 5 194.57      14.71   0.00   1.00  -92.21
+## mod.1 3 226.33      46.47   0.00   1.00 -110.13
+## mod.0 1 235.23      55.37   0.00   1.00 -116.61
+## mod.3 2 236.78      56.92   0.00   1.00 -116.38
+## mod.5 3 237.41      57.55   0.00   1.00 -115.67
+## mod.6 3 237.91      58.05   0.00   1.00 -115.92</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod<span class="fl">.8</span>)</code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = LGM ~ slope + elev + p_avg_y + p_min_spr, family = binomial, 
+##     data = dat3)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.24052  -0.42371  -0.21513  -0.09578   2.92567  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -3.7295     0.4247  -8.782  &lt; 2e-16 ***
+## slope         0.6588     0.1589   4.147 3.36e-05 ***
+## elev         -1.6607     0.3659  -4.539 5.66e-06 ***
+## p_avg_y      -1.8312     0.5265  -3.478 0.000505 ***
+## p_min_spr     1.9127     0.4928   3.881 0.000104 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 233.22  on 377  degrees of freedom
+## Residual deviance: 169.70  on 373  degrees of freedom
+##   (7 observations deleted due to missingness)
+## AIC: 179.7
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ---- Coefficient Plot for model 
+
+
+<span class="kw">coefplot2</span>(mod<span class="fl">.8</span>,
+          <span class="dt">main =</span> <span class="st">&quot;Model 8&quot;</span>, 
+          <span class="dt">col =</span> <span class="st">&#39;blue&#39;</span>, 
+          <span class="dt">cex.pts =</span> <span class="fl">1.3</span>,
+          <span class="dt">intercept =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p><img src="06_Burke_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ---- list coefficients
+<span class="kw">rownames</span>(<span class="kw">summary</span>(mod<span class="fl">.8</span>)$coefficients)</code></pre></div>
+<pre><code>## [1] &quot;(Intercept)&quot; &quot;slope&quot;       &quot;elev&quot;        &quot;p_avg_y&quot;     &quot;p_min_spr&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ---- Odds ratios and 95% CI
+ORs&lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">cbind</span>(<span class="dt">OR =</span> <span class="kw">coef</span>(mod<span class="fl">.8</span>), <span class="kw">confint</span>(mod<span class="fl">.8</span>)))[-<span class="dv">1</span>,] ## Intercept OR shouldn&#39;t be interpreted.
+ORs</code></pre></div>
+<pre><code>##                  OR      2.5 %     97.5 %
+## slope     1.9325343 1.41903903  2.6583034
+## elev      0.1900102 0.08612724  0.3656258
+## p_avg_y   0.1602284 0.05412035  0.4321948
+## p_min_spr 6.7716781 2.64571923 18.5883837</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## ----- Assess variance inflation (&gt;5 is not good) 
+<span class="kw">vif</span>(mod<span class="fl">.8</span>)</code></pre></div>
+<pre><code>##     slope      elev   p_avg_y p_min_spr 
+##  1.057754  1.068878  7.309721  7.356948</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.3.3 (2017-03-06)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## locale:
+## [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252   
+## [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C                      
+## [5] LC_TIME=English_Australia.1252    
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+## [1] gridExtra_2.2.1   viridis_0.4.0     viridisLite_0.2.0 ggplot2_2.2.1    
+## [5] coefplot2_0.1.3.2 coda_0.19-1       MASS_7.3-45       AICcmodavg_2.1-0 
+## [9] car_2.1-4        
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.10       nloptr_1.0.4       plyr_1.8.4        
+##  [4] tools_3.3.3        digest_0.6.12      lme4_1.1-12       
+##  [7] tibble_1.2         gtable_0.2.0       evaluate_0.10     
+## [10] nlme_3.1-131       lattice_0.20-34    mgcv_1.8-17       
+## [13] Matrix_1.2-8       yaml_2.1.14        parallel_3.3.3    
+## [16] SparseM_1.76       stringr_1.2.0      knitr_1.15.1      
+## [19] raster_2.5-8       MatrixModels_0.4-1 stats4_3.3.3      
+## [22] rprojroot_1.2      grid_3.3.3         nnet_7.3-12       
+## [25] reshape_0.8.6      survival_2.40-1    VGAM_1.0-3        
+## [28] rmarkdown_1.4      bookdown_0.3       sp_1.2-4          
+## [31] minqa_1.2.4        magrittr_1.5       scales_0.4.1      
+## [34] backports_1.0.5    htmltools_0.3.5    splines_3.3.3     
+## [37] assertthat_0.1     pbkrtest_0.4-7     unmarked_0.11-0   
+## [40] colorspace_1.3-2   xtable_1.8-2       labeling_0.3      
+## [43] quantreg_5.29      stringi_1.1.3      lazyeval_0.2.0    
+## [46] munsell_0.4.3</code></pre>
+
+</div>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="using-r-as-a-gis-working-with-raster-and-vector-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="landscape-based-hypothesis-testing-in-r.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/benmarwick/How-to-do-archaeological-science-using-R/06_Burke.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>How To Do Archaeological Science Using R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="How To Do Archaeological Science Using R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="How To Do Archaeological Science Using R" />
+  
+  <meta name="twitter:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
+  
+
+<meta name="author" content="Ben Marwick (editor)">
+
+
+<meta name="date" content="2017-03-29">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html">
+<link rel="next" href="using-r-as-a-gis-working-with-raster-and-vector-data.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.8/htmlwidgets.js"></script>
+<link href="libs/leaflet-0.7.7/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-0.7.7/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<link href="libs/leaflet-label-0.2.2/leaflet.label.css" rel="stylesheet" />
+<script src="libs/leaflet-label-0.2.2/leaflet.label.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-0.7.2/proj4leaflet.js"></script>
+<script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
+<script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/plotlyjs-1.16.3/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotlyjs-1.16.3/plotly-latest.min.js"></script>
+<script src="libs/plotly-binding-4.5.6/plotly.js"></script>
+<script async defer src="https://hypothes.is/embed.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88838732-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">How To Do Archaeological Science Using R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html"><i class="fa fa-check"></i><b>2</b> Basic spatial analysis in R: Point pattern analysis</a><ul>
+<li class="chapter" data-level="2.0.1" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#introduction-1"><i class="fa fa-check"></i><b>2.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.0.2" data-path="basic-spatial-analysis-in-r-point-pattern-analysis.html"><a href="basic-spatial-analysis-in-r-point-pattern-analysis.html#summary"><i class="fa fa-check"></i><b>2.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><i class="fa fa-check"></i><b>3</b> Using linear models to explore children’s institutions in urban areas</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#introduction-2"><i class="fa fa-check"></i><b>3.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.0.2" data-path="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html"><a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html#summary-1"><i class="fa fa-check"></i><b>3.0.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><i class="fa fa-check"></i><b>4</b> Agent-based modelling prehistoric landscape use with R and NetLogo</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#introduction-3"><i class="fa fa-check"></i><b>4.0.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.0.2" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#agent-based-modeling-with-netlogo-and-r"><i class="fa fa-check"></i><b>4.0.2</b> Agent-based modeling with NetLogo and R</a></li>
+<li class="chapter" data-level="4.0.3" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#starting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.3</b> Starting NetLogo from R</a></li>
+<li class="chapter" data-level="4.0.4" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#running-a-netlogo-model-from-r"><i class="fa fa-check"></i><b>4.0.4</b> Running a NetLogo model from R</a></li>
+<li class="chapter" data-level="4.0.5" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#getting-data-back-from-netlogo"><i class="fa fa-check"></i><b>4.0.5</b> Getting data back from NetLogo</a></li>
+<li class="chapter" data-level="4.0.6" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#plotting-the-data"><i class="fa fa-check"></i><b>4.0.6</b> Plotting the data</a></li>
+<li class="chapter" data-level="4.0.7" data-path="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html"><a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html#quitting-netlogo-from-r"><i class="fa fa-check"></i><b>4.0.7</b> Quitting NetLogo from R</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><i class="fa fa-check"></i><b>5</b> Tempo Plots in R for Analysing Radiocarbon Dates</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeological-motivation"><i class="fa fa-check"></i><b>5.0.1</b> Archaeological Motivation</a></li>
+<li class="chapter" data-level="5.0.2" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#obtain-mcmc-output-from-calibration-software"><i class="fa fa-check"></i><b>5.0.2</b> Obtain MCMC Output from Calibration Software</a></li>
+<li class="chapter" data-level="5.0.3" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#read-oxcal-mcmc-output"><i class="fa fa-check"></i><b>5.0.3</b> Read OxCal MCMC Output</a></li>
+<li class="chapter" data-level="5.0.4" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#select-and-confirm-columns-to-plot"><i class="fa fa-check"></i><b>5.0.4</b> Select and Confirm Columns to Plot</a></li>
+<li class="chapter" data-level="5.0.5" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#load-and-run-calc.tempo-function"><i class="fa fa-check"></i><b>5.0.5</b> Load and Run <code>calc.tempo</code> Function</a></li>
+<li class="chapter" data-level="5.0.6" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#check-calc.tempo-output"><i class="fa fa-check"></i><b>5.0.6</b> Check <code>calc.tempo</code> Output</a></li>
+<li class="chapter" data-level="5.0.7" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#example-plot-with-plot.tempo"><i class="fa fa-check"></i><b>5.0.7</b> Example Plot with <code>plot.tempo</code></a></li>
+<li class="chapter" data-level="5.0.8" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#archaeophases-software"><i class="fa fa-check"></i><b>5.0.8</b> ArchaeoPhases software</a></li>
+<li class="chapter" data-level="5.0.9" data-path="tempo-plots-in-r-for-analysing-radiocarbon-dates.html"><a href="tempo-plots-in-r-for-analysing-radiocarbon-dates.html#demo-files"><i class="fa fa-check"></i><b>5.0.9</b> Demo Files</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html"><i class="fa fa-check"></i><b>6</b> Using R as a GIS: working with raster and vector data</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="using-r-as-a-gis-working-with-raster-and-vector-data.html"><a href="using-r-as-a-gis-working-with-raster-and-vector-data.html#introduction-4"><i class="fa fa-check"></i><b>6.0.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><i class="fa fa-check"></i><b>7</b> Using R to analyse occupation as a function of geographical variables using logistic regression.</a><ul>
+<li class="chapter" data-level="7.1" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html"><i class="fa fa-check"></i><b>8</b> Landscape-based Hypothesis Testing in R</a><ul>
+<li class="chapter" data-level="8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#introduction-6"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#learning-goals"><i class="fa fa-check"></i><b>8.2</b> Learning goals</a></li>
+<li class="chapter" data-level="8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#loading-necessary-packages"><i class="fa fa-check"></i><b>8.3</b> Loading necessary packages</a></li>
+<li class="chapter" data-level="8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#defining-the-study-area"><i class="fa fa-check"></i><b>8.4</b> Defining the study area</a></li>
+<li class="chapter" data-level="8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#reading-site-locations-from-a-table-and-cropping-to-a-study-area"><i class="fa fa-check"></i><b>8.5</b> Reading “site” locations from a table and cropping to a study area</a></li>
+<li class="chapter" data-level="8.6" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#visualizing-site-locations"><i class="fa fa-check"></i><b>8.6</b> Visualizing site locations</a></li>
+<li class="chapter" data-level="8.7" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#downloading-landscape-data-with-feddata"><i class="fa fa-check"></i><b>8.7</b> Downloading landscape data with <em>FedData</em></a></li>
+<li class="chapter" data-level="8.8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#are-sites-situated-based-on-elevation"><i class="fa fa-check"></i><b>8.8</b> Are sites situated based on elevation?</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#extract-site-elevations"><i class="fa fa-check"></i><b>8.8.1</b> Extract site elevations</a></li>
+<li class="chapter" data-level="8.8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#calculate-kernel-density-curves-for-sites-and-landscape"><i class="fa fa-check"></i><b>8.8.2</b> Calculate kernel density curves for sites and landscape</a></li>
+<li class="chapter" data-level="8.8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#plot-the-kernel-density-curves"><i class="fa fa-check"></i><b>8.8.3</b> Plot the kernel density curves</a></li>
+<li class="chapter" data-level="8.8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#mann-whitney-u-test-comparing-non-normal-distributions"><i class="fa fa-check"></i><b>8.8.4</b> Mann-Whitney U test comparing non-normal distributions</a></li>
+<li class="chapter" data-level="8.8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#references-cited"><i class="fa fa-check"></i><b>8.8.5</b> References cited</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How To Do Archaeological Science Using R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tempo-plots-in-r-for-analysing-radiocarbon-dates" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Tempo Plots in R for Analysing Radiocarbon Dates</h1>
+<p>Thomas S. Dye</p>
+<div id="archaeological-motivation" class="section level3">
+<h3><span class="header-section-number">5.0.1</span> Archaeological Motivation</h3>
+<p>As archaeologists, we are interested in change over time, and as archaeological scientists we are interested in measuring it.</p>
+<p>The tempo plot is one way to measure change over time: it estimates the cumulative occurrence of archaeological events in a Bayesian calibration.</p>
+<p>The tempo plot yields a graphic where the slope of the plot directly reflects the pace of change: a period of rapid change yields a steep slope and a period of slow change yields a gentle slope. When there is no change, the plot is horizontal. When change is instantaneous, the plot is vertical.</p>
+<p>The example we’ll use in this demo includes radiocarbon dates collected beneath sixteen taro pond fields on three islands in Hawai`i. The dates provide <em>termini</em> <em>post quos</em> for the construction of the pond fields.</p>
+<p>In my work with the tempo plot so far I’ve interpreted different plot shapes as distinguishing tradition, innovation, and fashion. The tempo of change for the taro pond fields was interpreted as representing a tradition in old Hawai`i.</p>
+</div>
+<div id="obtain-mcmc-output-from-calibration-software" class="section level3">
+<h3><span class="header-section-number">5.0.2</span> Obtain MCMC Output from Calibration Software</h3>
+<p>A tempo plot summarizes the raw MCMC output yielded by a Bayesian calibration software package. A tempo plot can be constructed from the raw MCMC output produced by BCal, OxCal, and Chronomodel. Here, I’ll illustrate the use of OxCal.</p>
+<p>OxCal produces raw MCMC output when the <code>MCMC_sample</code> function appears near the start of the <code>.oxcal</code> file.</p>
+<p>OxCal’s <code>MCMC_sample</code> function takes three parameters: a name for the output file, the interval for sampling, and the maximum number of samples to write to the file. The example here will yield the file “loi-mcmc.csv” which will contain a maximum of 100,000 lines, using one in twenty-five of the MCMC iterations.</p>
+<pre><code>MCMC_sample(&quot;loi-mcmc&quot;, 25, 100000)</code></pre>
+</div>
+<div id="read-oxcal-mcmc-output" class="section level3">
+<h3><span class="header-section-number">5.0.3</span> Read OxCal MCMC Output</h3>
+<p>Here, we call the <code>read.csv</code> function to read the raw MCMC output file produced by OxCal and assign it to the variable <code>mcmc</code>. This might take a while; the file <code>loi-mcmc.csv</code> is 69.4 MB.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read in the large CSV very quickly</span>
+mcmc &lt;-<span class="st"> </span>readr::<span class="kw">read_csv</span>(<span class="st">&quot;loi-mcmc.csv&quot;</span>)
+<span class="co"># convert colnames to read.csv style</span>
+<span class="kw">names</span>(mcmc) &lt;-<span class="st"> </span><span class="kw">make.names</span>(<span class="kw">names</span>(mcmc))</code></pre></div>
+<p>This line writes a list of the column names to standard output. We’ll use this to select the columns of interest.</p>
+<p>The list written to standard output shows the index of the left-most column names in square brackets. This is a convention in <code>R</code>. In this list, the first entry, <code>Pass</code>, refers to the iteration of the MCMC sampler. Subsequent entries 2 … 89 refer to various components of the Bayesian chronological model, including age determinations and phase boundaries. Most of this information is not useful for the tempo plot demonstration, so we’ll need to separate the wheat from the chaff.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mcmc)</code></pre></div>
+<pre><code>##  [1] &quot;Pass&quot;                   &quot;Start.Pre.colonization&quot;
+##  [3] &quot;Beta.83313&quot;             &quot;Wk.15982&quot;              
+##  [5] &quot;Colonization&quot;           &quot;KOU.CS.5a&quot;             
+##  [7] &quot;Beta.20852b&quot;            &quot;Wk.19312&quot;              
+##  [9] &quot;Wk.19313&quot;               &quot;Beta.135125&quot;           
+## [11] &quot;Beta.42172&quot;             &quot;Beta.310824&quot;           
+## [13] &quot;Beta.343212&quot;            &quot;Beta.5613&quot;             
+## [15] &quot;NOSAMS.0809.26&quot;         &quot;Beta.339778&quot;           
+## [17] &quot;Beta.208143&quot;            &quot;Beta.101871&quot;           
+## [19] &quot;Beta.101872&quot;            &quot;Beta.260904&quot;           
+## [21] &quot;Beta.138980&quot;            &quot;Beta.150615&quot;           
+## [23] &quot;Beta.233042&quot;            &quot;Beta.150620&quot;           
+## [25] &quot;Beta.251247&quot;            &quot;Wk.19311&quot;              
+## [27] &quot;Wk.19310&quot;               &quot;Beta.135126&quot;           
+## [29] &quot;Beta.260905&quot;            &quot;Beta.45363&quot;            
+## [31] &quot;Beta.28136&quot;             &quot;Beta.28135&quot;            
+## [33] &quot;CAMS.25560&quot;             &quot;CAMS.26396&quot;            
+## [35] &quot;CAMS.25561&quot;             &quot;SR.5081&quot;               
+## [37] &quot;SR.5085&quot;                &quot;SR.5080&quot;               
+## [39] &quot;SR.5082&quot;                &quot;End.Post.colonization&quot; 
+## [41] &quot;Anahulu.start&quot;          &quot;X...&quot;                  
+## [43] &quot;O.Anahulu&quot;              &quot;Lower.Elialii.start&quot;   
+## [45] &quot;Beta.213276&quot;            &quot;M.Lower.Elialii&quot;       
+## [47] &quot;Upper.Elialii.start&quot;    &quot;Beta.213274&quot;           
+## [49] &quot;M.Upper.Elialii&quot;        &quot;Kuele.central.2.start&quot; 
+## [51] &quot;AA.72543&quot;               &quot;M.Kuele.central.2&quot;     
+## [53] &quot;Halawa.stage.1.start&quot;   &quot;Beta.263862&quot;           
+## [55] &quot;H.Halawa.stage.1&quot;       &quot;Halepoki.makai.start&quot;  
+## [57] &quot;AA71542b&quot;               &quot;M.Halepoki.makai&quot;      
+## [59] &quot;Kuele.central.1.start&quot;  &quot;AA.71549&quot;              
+## [61] &quot;M.Kuele.central.1&quot;      &quot;Halawa.bund.start&quot;     
+## [63] &quot;Beta.263861&quot;            &quot;H.Halawa.bund&quot;         
+## [65] &quot;Kukuinui.start&quot;         &quot;AA71541&quot;               
+## [67] &quot;M.Kukuinui&quot;             &quot;Kuele.west.start&quot;      
+## [69] &quot;AA71122&quot;                &quot;M.Kuele.west&quot;          
+## [71] &quot;Halepoki.central.start&quot; &quot;AA71550&quot;               
+## [73] &quot;M.Halepoki.central&quot;     &quot;Keiu.start&quot;            
+## [75] &quot;Beta.193986&quot;            &quot;M.Keiu&quot;                
+## [77] &quot;Halepoki.mauka.start&quot;   &quot;AA72162&quot;               
+## [79] &quot;M.Halepoki.mauka&quot;       &quot;Pawaa.central.start&quot;   
+## [81] &quot;AA71121&quot;                &quot;M.Pawaa.central&quot;       
+## [83] &quot;Pawaa.makai.start&quot;      &quot;AA72161&quot;               
+## [85] &quot;M.Pawaa.makai&quot;          &quot;Lahokea.start&quot;         
+## [87] &quot;Beta.215407&quot;            &quot;M.Lahokea&quot;             
+## [89] &quot;X89&quot;</code></pre>
+</div>
+<div id="select-and-confirm-columns-to-plot" class="section level3">
+<h3><span class="header-section-number">5.0.4</span> Select and Confirm Columns to Plot</h3>
+<p>For this example, we are interested in construction date estimates for taro pond fields. In the Bayesian chronological model these estimates are labeled starting with a capital letter followed by a dot.</p>
+<p>Indices of the construction date estimates are assigned to the variable <code>i</code>. From the output of <code>colnames(mcmc)</code> above, we can see that column 43 is named “O.Anahulu”, which represents the construction date estimate of a taro pond field in the Anahulu Valley of O`ahu Island, column 46 is named “M.Lower.Elialii”, which represents the construction date estimate of a taro pond field in the lower Elialii system in a valley on Moloka`i Island, etc.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">i &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">43</span>, <span class="dv">46</span>, <span class="dv">49</span>, <span class="dv">52</span>, <span class="dv">55</span>, <span class="dv">58</span>, <span class="dv">61</span>, <span class="dv">64</span>, <span class="dv">67</span>, <span class="dv">70</span>, <span class="dv">73</span>, <span class="dv">76</span>, <span class="dv">79</span>, <span class="dv">82</span>, <span class="dv">85</span>, <span class="dv">88</span>)</code></pre></div>
+<p>The interesting portion of <code>mcmc</code> is assigned to the variable <code>mcmc.select</code>, using the indexing facility of <code>R</code>. The square brackets at the end of this line enclose two values—a nil value before the comma, and the vector of indices in our variable <code>i</code> after the comma—that instruct <code>R</code> to select all rows but only the columns indexed in <code>i</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mcmc.select &lt;-<span class="st"> </span>mcmc[,i]</code></pre></div>
+<p>We now have a table with 16 columns, instead of one with 89 columns. Here, we check that the column names of <code>mcmc.select</code> are the ones we intended to select. Happily, there are 16 of them and they appear to be correct. The column named “O.Anahulu” that was the 43rd column of <code>mcmc</code> is now the first column of <code>mcmc.select</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(mcmc.select)</code></pre></div>
+<pre><code>##  [1] &quot;O.Anahulu&quot;          &quot;M.Lower.Elialii&quot;    &quot;M.Upper.Elialii&quot;   
+##  [4] &quot;M.Kuele.central.2&quot;  &quot;H.Halawa.stage.1&quot;   &quot;M.Halepoki.makai&quot;  
+##  [7] &quot;M.Kuele.central.1&quot;  &quot;H.Halawa.bund&quot;      &quot;M.Kukuinui&quot;        
+## [10] &quot;M.Kuele.west&quot;       &quot;M.Halepoki.central&quot; &quot;M.Keiu&quot;            
+## [13] &quot;M.Halepoki.mauka&quot;   &quot;M.Pawaa.central&quot;    &quot;M.Pawaa.makai&quot;     
+## [16] &quot;M.Lahokea&quot;</code></pre>
+</div>
+<div id="load-and-run-calc.tempo-function" class="section level3">
+<h3><span class="header-section-number">5.0.5</span> Load and Run <code>calc.tempo</code> Function</h3>
+<p>This line reads in the tempo plot source code distributed in the file <code>tempo-plot-demo-saa-2017.r</code>. There are two functions in the file, which we’ll use to calculate the tempo plot and to print it to a graphics device.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">&quot;tempo-plot-demo-saa-2017.r&quot;</span>)</code></pre></div>
+<p>Here is the <code>calc.tempo</code> function we’ll use to calculate the tempo plot. It is worth looking at in detail because other joint posterior calculations will have similar structure.</p>
+<p>The function has three parameters:</p>
+<ul>
+<li><code>mcmc.data</code> is the selected columns of the raw MCMC output from OxCal</li>
+<li><code>by.int</code> specifies the interval in years between points for which the statistic will be calculated</li>
+<li><code>out.file</code> is an optional parameter that will write the tempo calculation to a file.</li>
+</ul>
+<p>The first line finds the minimum and maximum values in <code>mcmc.data</code> and creates a vector from the minimum to the maximum by the interval <code>by.int</code>. The vector is assigned to the variable <code>years</code>; these are the years for which the statistic will be calculated.</p>
+<p>The second line declares a matrix <code>res.mat</code> large enough to hold the results of the calculation.</p>
+<p>Most of the work takes place in the <code>for</code> loop, which loops over <code>years</code> and determines for each of the 100,000 lines in <code>mcmc.data</code> how many taro pond fields were constructed before that year. This is the part of the function that would change if a different statistic were implemented.</p>
+<p>The results of the simulation are summarized in the lines assigning values to the variables <code>means</code> and <code>sds</code>.</p>
+<p>The results are packaged up in a dataframe assigned to the variable <code>res.df</code>.</p>
+<p>The variable <code>res.df</code> is then written to a file if the <code>out.file</code> parameter has a value and finally returned.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calc.tempo &lt;-<span class="st"> </span>function(mcmc.data, by.int, <span class="dt">out.file=</span><span class="st">&quot;&quot;</span>) {
+  years &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">floor</span>(<span class="kw">min</span>(mcmc.data)), <span class="dt">to =</span> <span class="kw">ceiling</span>(<span class="kw">max</span>(mcmc.data)), <span class="dt">by =</span> by.int)
+  res.mat &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dt">ncol =</span> <span class="kw">length</span>(years), <span class="dt">nrow =</span> <span class="kw">dim</span>(mcmc.data)[<span class="dv">1</span>])
+
+  for (i in <span class="dv">1</span>:<span class="kw">length</span>(years)) {
+    gte &lt;-<span class="st"> </span>mcmc.data &lt;=<span class="st"> </span>years[i]
+    res.mat[,i] &lt;-<span class="st"> </span><span class="kw">rowSums</span>(gte)
+  }
+  means &lt;-<span class="st"> </span><span class="kw">colMeans</span>(res.mat)
+  sds &lt;-<span class="st"> </span><span class="kw">apply</span>(res.mat, <span class="dv">2</span>, sd)
+  res.df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mean =</span> means, <span class="dt">sd =</span> sds, <span class="dt">year =</span> years)
+
+  if (!(out.file ==<span class="st"> &quot;&quot;</span>)) {
+    <span class="kw">write.csv</span>(res.df, out.file)
+  }
+  <span class="kw">return</span>(res.df)
+}</code></pre></div>
+<p>Here, we call <code>calc.tempo</code> with our <code>mcmc.select</code> data, ask the function to calculate the statistic by decade, and save the results to a file, <code>loi-tempo.csv</code>. In addition, we save the results in a variable, <code>loi.tempo</code>, to save ourselves the trouble of reading them back in from the file.</p>
+<p>If, at some later date, we desire access to the data, then we can <code>read.csv(&quot;loi-tempo.csv&quot;)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loi.tempo &lt;-<span class="st"> </span><span class="kw">calc.tempo</span>(<span class="dt">mcmc.data =</span> mcmc.select, <span class="dt">by.in =</span> <span class="dv">10</span>, <span class="dt">out.file =</span> <span class="st">&quot;loi-tempo.csv&quot;</span>)</code></pre></div>
+</div>
+<div id="check-calc.tempo-output" class="section level3">
+<h3><span class="header-section-number">5.0.6</span> Check <code>calc.tempo</code> Output</h3>
+<p>A summary of the <code>calc.tempo</code> results suggests all went well. The mean number of construction events ranges from 0 to just under 16, the number of taro pond fields in our sample. The calculations were carried out for a period of almost 900 years, from AD 1056 to 1946.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(loi.tempo)</code></pre></div>
+<pre><code>##       mean               sd              year     
+##  Min.   : 0.0000   Min.   :0.0000   Min.   :1056  
+##  1st Qu.: 0.3658   1st Qu.:0.4707   1st Qu.:1278  
+##  Median : 5.7018   Median :1.4603   Median :1501  
+##  Mean   : 5.6574   Mean   :1.0657   Mean   :1501  
+##  3rd Qu.: 9.0754   3rd Qu.:1.5279   3rd Qu.:1724  
+##  Max.   :15.8329   Max.   :1.5576   Max.   :1946</code></pre>
+</div>
+<div id="example-plot-with-plot.tempo" class="section level3">
+<h3><span class="header-section-number">5.0.7</span> Example Plot with <code>plot.tempo</code></h3>
+<p>The source file, <code>tempo-plot-demo-saa-2017.r</code>, includes a simple function to plot the <code>calc.tempo</code> results based on the <code>ggplot2</code> library. The function <code>plot.tempo</code> accepts data from an <code>R</code> variable with the parameter <code>tempo.data</code> or from a file created by <code>calc.tempo</code> with the <code>in.file</code> parameter. If both <code>tempo.data</code> and <code>in.file</code> are supplied, then the data are taken from <code>tempo.data</code> and the <code>in.file</code> parameter is ignored.</p>
+<p>The <code>plot.tempo</code> function displays the graph on-screen. If the parameter <code>out.file</code> is specified with a graphics file extension recognized by <code>R</code>, then the graphic will be written to <code>out.file</code>. If <code>out.file</code> is not specified, then only the on-screen graph is produced.</p>
+<p>Some parameters modify the graphic output. The parameters <code>min.x</code> and <code>max.x</code> can be used to specify the x-axis limits, so you can “zoom” in or out. The parameters <code>x.label</code> and <code>y.label</code> make it possible to modify the x-axis and y-axis labels. The parameters <code>plot.ht</code> and <code>plot.wi</code> set the height and width of the plot in inches. Their default values are standard <code>R</code> values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot.tempo &lt;-<span class="st"> </span>function(<span class="dt">tempo.data =</span> <span class="ot">NULL</span>, <span class="dt">in.file =</span> <span class="st">&quot;&quot;</span>,  <span class="dt">out.file =</span> <span class="st">&quot;&quot;</span>, <span class="dt">max.x =</span> <span class="ot">NA</span>,
+                              <span class="dt">min.x =</span> <span class="ot">NA</span>, <span class="dt">y.label =</span> <span class="st">&quot;Cumulative Events&quot;</span>,
+                              <span class="dt">x.label =</span> <span class="st">&quot;Calendar Year&quot;</span>, <span class="dt">plot.ht =</span> <span class="dv">7</span>,
+                              <span class="dt">plot.wi =</span> <span class="dv">7</span>){
+  <span class="kw">library</span>(ggplot2)
+  if (<span class="kw">is.null</span>(tempo.data)){
+    if (in.file ==<span class="st"> &quot;&quot;</span>){
+      <span class="kw">stop</span>(<span class="st">&quot;No data source&quot;</span>)}
+    else {
+        tempo.data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(in.file)}
+  }
+  h &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tempo.data, <span class="kw">aes</span>(<span class="dt">x =</span> year))
+  h &lt;-<span class="st"> </span>h +<span class="st"> </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> mean -<span class="st"> </span>sd, <span class="dt">ymax =</span> mean +<span class="st"> </span>sd))
+  h &lt;-<span class="st"> </span>h +<span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> mean))
+  h &lt;-<span class="st"> </span>h +<span class="st"> </span><span class="kw">xlab</span>(x.label) +<span class="st"> </span><span class="kw">ylab</span>(y.label)
+  if (!(<span class="kw">is.na</span>(max.x) |<span class="st"> </span><span class="kw">is.na</span>(min.x))){
+    h &lt;-<span class="st"> </span>h +<span class="st"> </span><span class="kw">xlim</span>(min.x, max.x)
+  }
+  if (!(out.file ==<span class="st"> &quot;&quot;</span>)) {
+    <span class="kw">ggsave</span>(<span class="dt">filename =</span> out.file, <span class="dt">plot=</span> h, <span class="dt">height =</span> plot.ht, <span class="dt">width =</span> plot.wi)
+  }
+  old.par &lt;-<span class="st"> </span><span class="kw">par</span>(<span class="dt">no.readonly =</span> T)
+  <span class="kw">dev.new</span>(<span class="dt">width =</span> plot.wi, <span class="dt">height =</span> plot.ht)
+  <span class="kw">print</span>(h)
+  <span class="kw">par</span>(old.par)
+}</code></pre></div>
+<p>Here, the <code>tempo.data</code> function is called with the variable <code>loi.tempo</code> produced by the function <code>calc.tempo</code> and the graph is saved in PDF format to the file <code>loi-tempo.png</code>. The plot height is set to 3 inches, so both the on-screen graphic and the graphic saved to <code>loi-tempo.png</code> will be short and wide.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot.tempo</span>(<span class="dt">tempo.data =</span> loi.tempo, <span class="dt">out.file =</span> <span class="st">&quot;loi-tempo.png&quot;</span>, <span class="dt">plot.ht =</span> <span class="dv">3</span>)</code></pre></div>
+<div class="figure">
+<img src="./loi-tempo.png" />
+
+</div>
+<p>The steady tempo of taro pond field construction events over a period of more than 600 years indicates that the practice was a tradition in old Hawai`i.</p>
+</div>
+<div id="archaeophases-software" class="section level3">
+<h3><span class="header-section-number">5.0.8</span> ArchaeoPhases software</h3>
+<p>Developers of the Bayesian calibration application <code>Chronomodel</code>, Anne Philippe and Marie-Ann Vibet at Jean Leray Mathematics Lab, Université de Nantes, are developing open-source <code>R</code> software called <a href="https://cran.r-project.org/package=ArchaeoPhases"><code>ArchaeoPhases</code></a> to process the raw MCMC output from <code>Chronomodel</code> and <code>OxCal</code>. Support for the raw MCMC output of <code>BCal</code> is planned.</p>
+<p>The <code>ArchaeoPhases</code> software includes a function, <code>TempoPlot</code>, that develops a Bayesian implementation of the tempo plot. Here is an example of graphical output using code currently under development and expected to be included in the next release of the software.</p>
+<div class="figure">
+<img src="./loi-ap.png" />
+
+</div>
+</div>
+<div id="demo-files" class="section level3">
+<h3><span class="header-section-number">5.0.9</span> Demo Files</h3>
+<p>The demo comprises these four files:</p>
+<ul>
+<li><code>loi-mcmc.csv</code>, a large comma-separated value file containing the raw MCMC data from an OxCal calibration;</li>
+<li><code>tempo-plot-demo-saa-2017.r</code>, an <code>R</code> source code file with definitions of the functions <code>calc.tempo</code> and <code>plot.tempo</code>; and</li>
+<li><code>tempo-plot-demo-saa-2017.Rmd</code>, the <code>R Markdown</code> source for the document you are reading.</li>
+<li><code>loi-ap.png</code>, a graphics file produced by <code>ArchaeoPhases</code> software under development.</li>
+</ul>
+<p>These two files are produced during the demo:</p>
+<ul>
+<li><code>loi-tempo.csv</code>, a comma-separated value file containing the results returned by the <code>calc.tempo</code> function; and</li>
+<li><code>loi-tempo.png</code>, a png file of the graphic produced by the function <code>plot.tempo</code>.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.3.3 (2017-03-06)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 7 x64 (build 7601) Service Pack 1
+## 
+## locale:
+## [1] LC_COLLATE=English_Australia.1252  LC_CTYPE=English_Australia.1252   
+## [3] LC_MONETARY=English_Australia.1252 LC_NUMERIC=C                      
+## [5] LC_TIME=English_Australia.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+## [1] ggplot2_2.2.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.10     knitr_1.15.1     magrittr_1.5     hms_0.3         
+##  [5] munsell_0.4.3    colorspace_1.3-2 R6_2.2.0         stringr_1.2.0   
+##  [9] plyr_1.8.4       tools_3.3.3      grid_3.3.3       gtable_0.2.0    
+## [13] htmltools_0.3.5  yaml_2.1.14      lazyeval_0.2.0   rprojroot_1.2   
+## [17] digest_0.6.12    assertthat_0.1   tibble_1.2       bookdown_0.3    
+## [21] readr_1.1.0      evaluate_0.10    rmarkdown_1.4    labeling_0.3    
+## [25] stringi_1.1.3    methods_3.3.3    scales_0.4.1     backports_1.0.5</code></pre>
+
+</div>
+</div>
+
+<div class = rmdsale>
+Want to know when the book is for sale? Enter your email so we can let you know.
+<iframe src="email_submit.html" width="760" height="30" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="agent-based-modelling-prehistoric-landscape-use-with-r-and-netlogo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="using-r-as-a-gis-working-with-raster-and-vector-data.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": null,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/benmarwick/How-to-do-archaeological-science-using-R/04_Dye.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

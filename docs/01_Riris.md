@@ -211,7 +211,7 @@ clarkevans.test(main.pp, correction = c("Donnelly"), nsim = 999)
 ## 	Monte Carlo test based on 999 simulations of CSR with fixed n
 ## 
 ## data:  main.pp
-## R = 1.053, p-value = 0.662
+## R = 1.053, p-value = 0.722
 ## alternative hypothesis: two-sided
 ```
 
