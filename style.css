@@ -1,0 +1,96 @@
+.goog-te-banner-frame.skiptranslate {display: none !important;}
+    body { top: 0px !important; }
+
+.h-icon-chevron-left {
+    background: white;
+	    padding: 3px;
+	    border: #eee 1px solid;
+	    color: #666;
+	  }
+
+
+.fa-rotate-315 {
+    -webkit-transform: rotate(315deg);
+    -moz-transform: rotate(315deg);
+    -ms-transform: rotate(315deg);
+    -o-transform: rotate(315deg);
+    transform: rotate(315deg);
+}
+
+
+.rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+.rmdcaution {
+  background-image: url("images/caution.png");
+}
+.rmdimportant {
+  background-image: url("images/important.png");
+}
+.rmdnote {
+  background-image: url("images/note.png");
+}
+.rmdtip {
+  background-image: url("images/tip.png");
+}
+.rmdwarning {
+  background-image: url("images/warning.png");
+}
+
+.rmdreview {
+  padding: 1em 1em 1em 5em;
+  margin-bottom: 0px;
+  background: #f5f5f5 5px center/3em no-repeat;
+  position:relative;
+}
+
+.rmdreview:before {
+    content: "\f0e6";
+    font-family: FontAwesome;
+    left:10px;
+    position:absolute;
+    top:10px;
+    bottom: 0px;
+    font-size: 60px;
+ }
+
+ .rmdsale {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 0px;
+  background: #f5f5f5 5px center/3em no-repeat;
+  position:relative;
+}
+
+.rmdsale:before {
+    content: "\f07a";
+    font-family: FontAwesome;
+    left:10px;
+    position:absolute;
+    top:15px;
+    bottom: 0px;
+    font-size: 40px;
+ }
+
+.rmdtranslate {
+  padding: 1em 1em 1em 5em;
+  margin-bottom: 0px;
+  background: #f5f5f5 5px center/3em no-repeat;
+  position:relative;
+}
+
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}

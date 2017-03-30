@@ -1,0 +1,125 @@
+# Using linear models to explore children's institutions in urban areas
+
+Paulina Przystupa
+
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = "02_Przystupa")
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+### Introduction
+
+Hi, my name is Paulina and I was interested in looking at the placement of children's institutions through time in relation to urban areas. Historical documents suggest that in the United States starting in the late 1800s and into the 1900s more and more Americans believed that rural and natural environments were good for raising children. These ideas started appearing in child-rearing literature initially aimed at middle-class parents. However, I wondered if these same beliefs applied to those who ran children's institutions. Children's institutions, such as orphanages and Native American Boarding schools, also rose to prominence at this time but were situated between the middle-class sensibilities of those forming such institutions and the practical service such places provided. To see if such institutions conformed to this idea I collected a sample of 62 children's institutions, half Native American boarding schools, and half Orphanages to see if through time their relationship to urban areas changed. Specifically, I was interested in examining it as a linear trend, one where through time such institutions are built farther from urban areas. 
+
+#### Import the data into R
+
+After collecting my data, which consisted of a list of institutions, and finding out the distances, I used as-the-crow-flies distance to their city hall as my measure, I loaded the comma separated file or csv into R. You can save CSV files from excel and a lot of other workbook or table formats. You can also just load tables directly into R.   
+
+```{r}
+child = read.csv("Combined_Orph_NA_data.csv")
+```
+
+#### Exploratory data analysis
+
+I wanted to just look at the data together and see what the relationship to time was so I did a basic scatter plot
+
+```{r}
+plot(Distance_KM ~ Year, 
+     data = child)
+```
+
+It doesn't look like a particularly strong trend but I can test this by fitting a linear regression model to see what is going on with my data using:
+
+```{r}
+child.lm = lm(Distance_KM ~ Year, 
+           data = child)
+summary(child.lm)
+```
+
+This creates a linear regression of the dependent variable, distance in kilometers, to the independent variable time, as stated in years, and provides me with the coefficients for the intercept, which is listed under the Estimate and (intercept), and slope, which is the estimate under the year, as well as the R-squared values. R squared is a metric that allows us to understand how well the linear regression model explains our data. The call for linear model lm() includes two types of R squared, multiple and adjusted. It looks like for this case the multiple R-squared, or just R-squared, is .005 which means that only about half a percent of the data is predicted by our model. The adjusted R-squared includes the number of points used to create the model. Essentially it examines how meaningful the R is based on the n of your sample. This is so you can compare the strength of different models with different samples used to calculate them. It can go up or down depending on the sample. In this case, the adjusted-R squared does not improve when we adjust for the size of the sample. Lastly, the p-value, which is the liklihood that this is random, is nowhere near significant. So the combination of the p-value and my rather unhelpful R-squared values suggests there's limited explanatory value in a linear regression for this sample combined sample.
+
+#### Residuals
+While I'm here I'll also plot the residuals for the data set overall to see if there are any trends with those, which may alter my choice in data set or the methods I should apply to it. 
+
+```{r}
+child.res = resid(child.lm)
+plot(child$Year, child.res)
+abline(h = 0, col = "red")
+summary(lm(child.res~child$Year))
+```
+
+Looking at the plot it doesn't appear that there is any trend in the residuals and further more it has a p-value of 1 suggesting it is completely random. Which is what we want. If there were at trend in the residuals we might be looking at much more complicated data set and other statistical analysis of the data.
+
+#### Subsetting the data
+
+However, as I noted earlier that I included two different types of children's institution, so maybe each have different trends. To examine them separately I can use subset 
+
+```{r}
+NAB = subset(child, 
+             Instit_Type == "NAB")
+EAO = subset(child, 
+             Instit_Type == "O")
+```
+
+So now I can look at them separately, plotting distance per year for each institution
+
+```{r}
+plot(NAB$Distance_KM ~ NAB$Year, 
+     main = "Distance from urban area vs. year for Native American boarding schools")
+abline(lm(NAB$Distance_KM~NAB$Year), 
+       col = "red")
+
+plot(EAO$Distance_KM~EAO$Year, 
+     main = "Distance from urban area vs. year for Orphanages")
+abline(lm(EAO$Distance_KM~EAO$Year), 
+       col = "red")
+```
+
+This view looks like there may be some increasing trends but there are some significant outliers. Looking at the R-squared for those trend lines
+
+```{r}
+summary(lm(NAB$Distance_KM ~ NAB$Year))
+summary(lm(EAO$Distance_KM ~ EAO$Year))
+```
+
+#### Removing outliers
+
+The r-squared values are still really low and my p-values are not significant. So it might be useful to remove the outliers. However, it doesn't look like they have outliers at the same distance so for the orphanages I'm only going to look at ones that were less than 50 km, which removes two of my locations, while for Native American boarding schools I looked at ones that were less than 100 km. 
+
+```{r}
+NAB_no = subset(NAB, NAB$Distance_KM < 100)
+EAO_no = subset(EAO, EAO$Distance_KM < 50)
+```
+
+Then I re-plot them
+
+```{r}
+plot(NAB_no$Distance_KM~NAB_no$Year, 
+     main = "Distance from urban area vs. year for Native American boarding schools, No Outliers")
+abline(lm(NAB_no$Distance_KM ~ NAB_no$Year), 
+       col = "red")
+
+plot(EAO_no$Distance_KM~EAO_no$Year, 
+     main = "Distance from urban area vs. year for Orphanages, No outliers")
+abline(lm(EAO_no$Distance_KM ~ EAO_no$Year), 
+       col = "red")
+```
+
+So some trends, perhaps ones I'm not very happy with considering one of them is negative , but lets look at a summary of the regression lines: 
+
+```{r}
+summary(lm(NAB_no$Distance_KM ~ NAB_no$Year))
+summary(lm(EAO_no$Distance_KM ~ EAO_no$Year))
+```
+
+### Summary
+
+Unfortunately neither of those was significant either. So it looks like linear regression, regardless of whether the institutions are lumped together, institutions are separated by type, and whether or not they include outliers does not support the hypothesis that children's homes were built farther from urban areas through time. They all have very low R-squared values and insignificant p-values. However, there may be some interesting differences examining the trends before and after 1900, which I explored in other presentations. So while linear regression might not fit this data other methods may help us to understand what sort of trend we may be seeing.  
+
+```{r}
+sessionInfo()
+```
+ 

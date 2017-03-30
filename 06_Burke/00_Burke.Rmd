@@ -1,0 +1,190 @@
+---
+title: "Using R to analyse occupation as a function of geographical variables using logistic regression."
+author: "Ariane Burke"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+```
+
+## Introduction
+
+This demonstration is based on research published in:
+
+Burke, Ariane, et al. 2014	Exploring the impact of climate variability during the Last Glacial Maximum on the pattern of human occupation of Iberia. Journal of Human Evolution 73:35-46. http://dx.doi.org/10.1016/j.jhevol.2014.06.003
+
+```{r}
+## ----- Install  packages 
+require(car)  ## for vif (variance inflation test)
+# BM # we can install coefplot2 from:
+# devtools::install_github("palday/coefplot2", subdir = "pkg") # or 
+# install.packages("coefplot2",repos="http://www.math.mcmaster.ca/bolker/R",     type="source")
+require(AICcmodavg) ## for AIC model selection
+require(MASS) ## for stepAIC
+library(coefplot2) ## for coefficient plot.
+```
+
+
+```{r fig.show='hold'}
+## Set file name
+fileName <- "Test_Iberia.csv"
+
+## ----- Read in data
+dat <- read.csv(fileName, header=T) 
+
+## ----- View/check data
+head(dat)
+
+library(ggplot2)
+library(viridis)
+map_elev <- 
+ggplot(dat, 
+       aes(X, 
+           Y,
+           colour = elev)) +
+  geom_point(size = 2,
+             shape = 15) +
+  scale_color_viridis() +
+  theme_minimal() + 
+  coord_equal() +
+  ggtitle("Study area with elevation")
+
+map_precip  <- 
+ggplot(dat, 
+       aes(X, 
+           Y,
+           colour = p_min_spr)) +
+  geom_point(size = 2,
+             shape = 15) +
+    scale_color_viridis(option = "C") +
+  theme_minimal() + 
+  coord_equal() +
+  ggtitle("Study area with precipitation")
+
+library(gridExtra)
+grid.arrange(map_elev, map_precip)
+```
+
+
+```{r}
+###  ----- Standardization of predictors
+dat1 <- as.data.frame(cbind(dat[,c(1:4)], (scale(dat[,-c(1:4)]))))
+#dat2<- dat2[,] ## removal of extra non informative variables
+
+# Verification (make sure the vars are numerical)
+str(dat1)
+```
+
+Using all of the data including the zeros, which cannot be described as necessarily "true" zeroes, we introduce an artificial level of certainty regarding absences. This can bias results (King and Zeng, 2000; Dixon et al.,2005), (also see http://www2.unil.ch/biomapper/Download/Chefaoui-EcoMod-2008.pdf)
+
+To reduce this uncertainy, we sample the zeros which we now call pseudo absences. Good practice is 10x the number of presences (=1000). We can bootstrap this if we want, but this 1000 samples should be sufficient. We will nonetheless need to report some sensitivity to the number of absences used. 
+
+```{r}
+## ----- Tease apart presences and absences, then select a subset of absences - recombine presences (all) and absences (sample)
+numAbsences <- 350 ## 10x presences
+
+Presences <- subset(dat1, dat1$LGM == 1)
+Absences <- subset(dat1, dat1$LGM == 0)[sample(c(1:dim(dat1)[1]), numAbsences),]
+
+## ----- Final data on which analyses will be run
+dat2 <- rbind(Presences, Absences)
+
+	## ----- data table for forward selection (stepAIC)
+dat3 <- dat2[,c(2, 5, 6, 7, 8, 9, 10)]
+	## ----- View/check data
+head(dat3)
+```
+
+```{r}
+## ----- MODELLING
+
+## ----- Define formulae
+form0 <- formula(LGM ~ 1) #intercept only model
+form1 <- formula(LGM ~ Y + X)
+form2 <- formula(LGM ~ elev + slope)
+form3 <- formula(LGM ~ t_min_y)
+form4 <- formula(LGM ~ elev + slope + p_min_spr)
+form5 <- formula(LGM ~ p_min_spr + t_min_y)
+form6 <- formula(LGM ~ t_avg_y + p_avg_y)
+form7 <- formula(LGM ~ elev + slope + t_avg_y + p_avg_y)
+form8 <- formula(LGM~ .) ## all variables for step-wise procedure
+## all variables for step-wise procedure
+```
+
+
+```{r}
+## ----- Build models
+mod.0  <-  glm(form0, family = binomial, data = dat2)
+mod.1  <-  glm(form1, family = binomial, data = dat2)
+mod.2  <-  glm(form2, family = binomial, data = dat2)
+mod.3  <-  glm(form3, family = binomial, data = dat2)
+mod.4  <-  glm(form4, family = binomial, data = dat2)
+mod.5  <-  glm(form5, family = binomial, data = dat2)
+mod.6  <-  glm(form6, family = binomial, data = dat2)
+mod.7  <-  glm(form7, family = binomial, data = dat2)
+mod.8 <-   stepAIC(glm(form8, family = binomial, data = dat3))
+```
+
+
+
+
+```{r}
+## ----- Summarize AIC results, including weightings. Using modaicavg package.
+mods <-
+  list(mod.0,
+       mod.1, 
+       mod.2, 
+       mod.3, 
+       mod.4, 
+       mod.5, 
+       mod.6, 
+       mod.7, 
+       mod.8)
+
+modnames <-
+  c("mod.0",
+  "mod.1",
+  "mod.2",
+  "mod.3",
+  "mod.4",
+  "mod.5",
+  "mod.6",
+  "mod.7",
+  "mod.8")
+
+aictab(mods, modnames, second.ord = T)
+
+summary(mod.8)
+```
+
+```{r}
+## ---- Coefficient Plot for model 
+
+
+coefplot2(mod.8,
+          main = "Model 8", 
+          col = 'blue', 
+          cex.pts = 1.3,
+          intercept = FALSE)
+
+## ---- list coefficients
+rownames(summary(mod.8)$coefficients)
+```
+
+```{r}
+## ---- Odds ratios and 95% CI
+ORs<- exp(cbind(OR = coef(mod.8), confint(mod.8)))[-1,] ## Intercept OR shouldn't be interpreted.
+ORs
+
+## ----- Assess variance inflation (>5 is not good) 
+vif(mod.8)
+
+```
+
+
+```{r}
+sessionInfo()
+```

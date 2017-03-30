@@ -1,0 +1,21 @@
+bookdown::gitbook:
+  includes:
+    in_header: [hypothesis.html, google_analytics.html]
+    before_body: open_review_block.html
+    after_body: call_to_action_block.html
+  css: style.css
+  config:
+    toc:
+      before: |
+        <li><a href="./">How To Do Archaeological Science Using R</a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    edit: https://github.com/benmarwick/How-to-do-archaeological-science-using-R/%s
+    download: ["pdf", "epub"]
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default
