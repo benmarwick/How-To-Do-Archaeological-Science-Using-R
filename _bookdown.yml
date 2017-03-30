@@ -3,3 +3,4 @@ new_session: yes
 language:
   ui:
     chapter_name: "Chapter "
+    output_dir: "docs"
