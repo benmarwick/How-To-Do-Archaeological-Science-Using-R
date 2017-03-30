@@ -58,6 +58,9 @@
 <script src="libs/leaflet-binding-1.1.0/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.0.27/leaflet-providers.js"></script>
 <script src="libs/leaflet-providers-plugin-1.1.0/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.js"></script>
 <link href="libs/plotlyjs-1.16.3/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotlyjs-1.16.3/plotly-latest.min.js"></script>
 <script src="libs/plotly-binding-4.5.6/plotly.js"></script>
@@ -163,20 +166,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><i class="fa fa-check"></i><b>7</b> Using R to analyse occupation as a function of geographical variables using logistic regression.</a><ul>
 <li class="chapter" data-level="7.1" data-path="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html"><a href="using-r-to-analyse-occupation-as-a-function-of-geographical-variables-using-logistic-regression-.html#introduction-5"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html"><i class="fa fa-check"></i><b>8</b> Landscape-based Hypothesis Testing in R</a><ul>
-<li class="chapter" data-level="8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#introduction-6"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#learning-goals"><i class="fa fa-check"></i><b>8.2</b> Learning goals</a></li>
-<li class="chapter" data-level="8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#loading-necessary-packages"><i class="fa fa-check"></i><b>8.3</b> Loading necessary packages</a></li>
-<li class="chapter" data-level="8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#defining-the-study-area"><i class="fa fa-check"></i><b>8.4</b> Defining the study area</a></li>
-<li class="chapter" data-level="8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#reading-site-locations-from-a-table-and-cropping-to-a-study-area"><i class="fa fa-check"></i><b>8.5</b> Reading “site” locations from a table and cropping to a study area</a></li>
-<li class="chapter" data-level="8.6" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#visualizing-site-locations"><i class="fa fa-check"></i><b>8.6</b> Visualizing site locations</a></li>
-<li class="chapter" data-level="8.7" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#downloading-landscape-data-with-feddata"><i class="fa fa-check"></i><b>8.7</b> Downloading landscape data with <em>FedData</em></a></li>
-<li class="chapter" data-level="8.8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#are-sites-situated-based-on-elevation"><i class="fa fa-check"></i><b>8.8</b> Are sites situated based on elevation?</a><ul>
-<li class="chapter" data-level="8.8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#extract-site-elevations"><i class="fa fa-check"></i><b>8.8.1</b> Extract site elevations</a></li>
-<li class="chapter" data-level="8.8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#calculate-kernel-density-curves-for-sites-and-landscape"><i class="fa fa-check"></i><b>8.8.2</b> Calculate kernel density curves for sites and landscape</a></li>
-<li class="chapter" data-level="8.8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#plot-the-kernel-density-curves"><i class="fa fa-check"></i><b>8.8.3</b> Plot the kernel density curves</a></li>
-<li class="chapter" data-level="8.8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#mann-whitney-u-test-comparing-non-normal-distributions"><i class="fa fa-check"></i><b>8.8.4</b> Mann-Whitney U test comparing non-normal distributions</a></li>
-<li class="chapter" data-level="8.8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#references-cited"><i class="fa fa-check"></i><b>8.8.5</b> References cited</a></li>
+<li class="chapter" data-level="8" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><i class="fa fa-check"></i><b>8</b> Predicting site location with simple additive raster sensitivity analysis using R</a><ul>
+<li class="chapter" data-level="8.0.1" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#simple-arbitrary-additive-weight-sensitivity-model"><i class="fa fa-check"></i><b>8.0.1</b> Simple Arbitrary Additive Weight Sensitivity Model</a></li>
+<li class="chapter" data-level="8.0.2" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#study-area"><i class="fa fa-check"></i><b>8.0.2</b> Study Area</a></li>
+<li class="chapter" data-level="8.0.3" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#code"><i class="fa fa-check"></i><b>8.0.3</b> Code</a></li>
+<li class="chapter" data-level="8.0.4" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#define-functions"><i class="fa fa-check"></i><b>8.0.4</b> Define functions</a></li>
+<li class="chapter" data-level="8.0.5" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#load-packages"><i class="fa fa-check"></i><b>8.0.5</b> Load packages</a></li>
+<li class="chapter" data-level="8.0.6" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#load-raster-files"><i class="fa fa-check"></i><b>8.0.6</b> Load raster files</a></li>
+<li class="chapter" data-level="8.0.7" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#construct-weights"><i class="fa fa-check"></i><b>8.0.7</b> Construct weights</a></li>
+<li class="chapter" data-level="8.0.8" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#reclassify-rasters"><i class="fa fa-check"></i><b>8.0.8</b> Reclassify rasters</a></li>
+<li class="chapter" data-level="8.0.9" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#summing-rasters"><i class="fa fa-check"></i><b>8.0.9</b> Summing rasters</a></li>
+<li class="chapter" data-level="8.0.10" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#clip-sites"><i class="fa fa-check"></i><b>8.0.10</b> Clip sites</a></li>
+<li class="chapter" data-level="8.0.11" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#model-validation"><i class="fa fa-check"></i><b>8.0.11</b> Model Validation</a></li>
+<li class="chapter" data-level="8.0.12" data-path="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html"><a href="predicting-site-location-with-simple-additive-raster-sensitivity-analysis-using-r.html#results"><i class="fa fa-check"></i><b>8.0.12</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html"><i class="fa fa-check"></i><b>9</b> Landscape-based Hypothesis Testing in R</a><ul>
+<li class="chapter" data-level="9.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#introduction-6"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#learning-goals"><i class="fa fa-check"></i><b>9.2</b> Learning goals</a></li>
+<li class="chapter" data-level="9.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#loading-necessary-packages"><i class="fa fa-check"></i><b>9.3</b> Loading necessary packages</a></li>
+<li class="chapter" data-level="9.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#defining-the-study-area"><i class="fa fa-check"></i><b>9.4</b> Defining the study area</a></li>
+<li class="chapter" data-level="9.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#reading-site-locations-from-a-table-and-cropping-to-a-study-area"><i class="fa fa-check"></i><b>9.5</b> Reading “site” locations from a table and cropping to a study area</a></li>
+<li class="chapter" data-level="9.6" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#visualizing-site-locations"><i class="fa fa-check"></i><b>9.6</b> Visualizing site locations</a></li>
+<li class="chapter" data-level="9.7" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#downloading-landscape-data-with-feddata"><i class="fa fa-check"></i><b>9.7</b> Downloading landscape data with <em>FedData</em></a></li>
+<li class="chapter" data-level="9.8" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#are-sites-situated-based-on-elevation"><i class="fa fa-check"></i><b>9.8</b> Are sites situated based on elevation?</a><ul>
+<li class="chapter" data-level="9.8.1" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#extract-site-elevations"><i class="fa fa-check"></i><b>9.8.1</b> Extract site elevations</a></li>
+<li class="chapter" data-level="9.8.2" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#calculate-kernel-density-curves-for-sites-and-landscape"><i class="fa fa-check"></i><b>9.8.2</b> Calculate kernel density curves for sites and landscape</a></li>
+<li class="chapter" data-level="9.8.3" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#plot-the-kernel-density-curves"><i class="fa fa-check"></i><b>9.8.3</b> Plot the kernel density curves</a></li>
+<li class="chapter" data-level="9.8.4" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#mann-whitney-u-test-comparing-non-normal-distributions"><i class="fa fa-check"></i><b>9.8.4</b> Mann-Whitney U test comparing non-normal distributions</a></li>
+<li class="chapter" data-level="9.8.5" data-path="landscape-based-hypothesis-testing-in-r.html"><a href="landscape-based-hypothesis-testing-in-r.html#references-cited"><i class="fa fa-check"></i><b>9.8.5</b> References cited</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="open.html"><a href="open.html"><i class="fa fa-check"></i><b>10</b> Open Review</a><ul>
+<li class="chapter" data-level="10.1" data-path="open.html"><a href="open.html#faq-about-open-review"><i class="fa fa-check"></i><b>10.1</b> FAQ about open review</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="open.html"><a href="open.html#what-kind-of-feedback-are-you-looking-for"><i class="fa fa-check"></i><b>10.1.1</b> What kind of feedback are you looking for?</a></li>
+<li class="chapter" data-level="10.1.2" data-path="open.html"><a href="open.html#can-i-see-the-annotations-that-others-are-making"><i class="fa fa-check"></i><b>10.1.2</b> Can I see the annotations that others are making?</a></li>
+<li class="chapter" data-level="10.1.3" data-path="open.html"><a href="open.html#what-are-the-benefits-for-readers"><i class="fa fa-check"></i><b>10.1.3</b> What are the benefits for readers?</a></li>
+<li class="chapter" data-level="10.1.4" data-path="open.html"><a href="open.html#what-are-the-benefits-for-authors-and-publishers"><i class="fa fa-check"></i><b>10.1.4</b> What are the benefits for authors and publishers?</a></li>
+<li class="chapter" data-level="10.1.5" data-path="open.html"><a href="open.html#has-anyone-ever-done-something-like-this-before"><i class="fa fa-check"></i><b>10.1.5</b> Has anyone ever done something like this before?</a></li>
+<li class="chapter" data-level="10.1.6" data-path="open.html"><a href="open.html#what-kind-of-information-are-you-collecting-and-how-will-that-information-be-used"><i class="fa fa-check"></i><b>10.1.6</b> What kind of information are you collecting and how will that information be used?</a></li>
+<li class="chapter" data-level="10.1.7" data-path="open.html"><a href="open.html#how-i-can-learn-more-about-traditional-peer-review-of-academic-books"><i class="fa fa-check"></i><b>10.1.7</b> How I can learn more about traditional peer review of academic books?</a></li>
+<li class="chapter" data-level="10.1.8" data-path="open.html"><a href="open.html#can-i-do-this-with-my-book"><i class="fa fa-check"></i><b>10.1.8</b> Can I do this with my book?</a></li>
+<li class="chapter" data-level="10.1.9" data-path="open.html"><a href="open.html#i-have-a-different-question-about-open-review.-how-can-i-get-in-touch"><i class="fa fa-check"></i><b>10.1.9</b> I have a different question about Open Review. How can I get in touch?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="open.html"><a href="open.html#privacy-and-consent-policy"><i class="fa fa-check"></i><b>10.2</b> Privacy and Consent Policy</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="open.html"><a href="open.html#overview"><i class="fa fa-check"></i><b>10.2.1</b> Overview</a></li>
+<li class="chapter" data-level="10.2.2" data-path="open.html"><a href="open.html#what-information-do-we-collect"><i class="fa fa-check"></i><b>10.2.2</b> What information do we collect?</a></li>
+<li class="chapter" data-level="10.2.3" data-path="open.html"><a href="open.html#how-do-we-use-your-information"><i class="fa fa-check"></i><b>10.2.3</b> How do we use your information?</a></li>
+<li class="chapter" data-level="10.2.4" data-path="open.html"><a href="open.html#how-do-we-protect-your-information"><i class="fa fa-check"></i><b>10.2.4</b> How do we protect your information?</a></li>
+<li class="chapter" data-level="10.2.5" data-path="open.html"><a href="open.html#do-we-use-cookies"><i class="fa fa-check"></i><b>10.2.5</b> Do we use cookies?</a></li>
+<li class="chapter" data-level="10.2.6" data-path="open.html"><a href="open.html#do-we-disclose-any-information-to-outside-parties"><i class="fa fa-check"></i><b>10.2.6</b> Do we disclose any information to outside parties?</a></li>
+<li class="chapter" data-level="10.2.7" data-path="open.html"><a href="open.html#third-party-links"><i class="fa fa-check"></i><b>10.2.7</b> Third party links</a></li>
+<li class="chapter" data-level="10.2.8" data-path="open.html"><a href="open.html#website-hosting"><i class="fa fa-check"></i><b>10.2.8</b> Website hosting</a></li>
+<li class="chapter" data-level="10.2.9" data-path="open.html"><a href="open.html#your-consent"><i class="fa fa-check"></i><b>10.2.9</b> Your consent</a></li>
+<li class="chapter" data-level="10.2.10" data-path="open.html"><a href="open.html#questions"><i class="fa fa-check"></i><b>10.2.10</b> Questions</a></li>
+<li class="chapter" data-level="10.2.11" data-path="open.html"><a href="open.html#changes-to-our-privacy-and-consent-policy"><i class="fa fa-check"></i><b>10.2.11</b> Changes to our Privacy and Consent Policy</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -341,7 +384,7 @@ sites.pp &lt;-<span class="st"> </span><span class="kw">superimpose</span>(main.
 ##  Monte Carlo test based on 999 simulations of CSR with fixed n
 ## 
 ## data:  main.pp
-## R = 1.053, p-value = 0.662
+## R = 1.053, p-value = 0.718
 ## alternative hypothesis: two-sided</code></pre>
 <p>R &gt; 1 among primary sites, but not significant</p>
 <p>Tentative conclusion: there are two different processes creating the observed distribution of sites</p>

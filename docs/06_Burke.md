@@ -174,38 +174,38 @@ mod.8 <-   stepAIC(glm(form8, family = binomial, data = dat3))
 ```
 
 ```
-## Start:  AIC=177.4
+## Start:  AIC=183.98
 ## LGM ~ t_avg_y + t_min_y + slope + elev + p_avg_y + p_min_spr
 ## 
 ##             Df Deviance    AIC
-## - t_avg_y    1   163.40 175.40
-## - t_min_y    1   163.40 175.40
-## <none>           163.40 177.40
-## - slope      1   178.06 190.06
-## - p_avg_y    1   179.82 191.82
-## - p_min_spr  1   185.33 197.33
-## - elev       1   200.26 212.26
+## - t_min_y    1   170.06 182.06
+## - t_avg_y    1   170.14 182.14
+## <none>           169.98 183.98
+## - slope      1   182.22 194.22
+## - p_avg_y    1   185.86 197.86
+## - p_min_spr  1   188.61 200.61
+## - elev       1   196.79 208.79
 ## 
-## Step:  AIC=175.4
-## LGM ~ t_min_y + slope + elev + p_avg_y + p_min_spr
+## Step:  AIC=182.06
+## LGM ~ t_avg_y + slope + elev + p_avg_y + p_min_spr
 ## 
 ##             Df Deviance    AIC
-## - t_min_y    1   163.40 173.40
-## <none>           163.40 175.40
-## - slope      1   179.01 189.01
-## - p_avg_y    1   185.34 195.34
-## - p_min_spr  1   185.69 195.69
-## - elev       1   201.11 211.11
+## - t_avg_y    1   170.28 180.28
+## <none>           170.06 182.06
+## - slope      1   182.77 192.77
+## - p_avg_y    1   188.09 198.09
+## - p_min_spr  1   188.61 198.61
+## - elev       1   196.97 206.97
 ## 
-## Step:  AIC=173.4
+## Step:  AIC=180.28
 ## LGM ~ slope + elev + p_avg_y + p_min_spr
 ## 
 ##             Df Deviance    AIC
-## <none>           163.40 173.40
-## - slope      1   179.39 187.39
-## - p_avg_y    1   186.46 194.46
-## - p_min_spr  1   187.01 195.01
-## - elev       1   201.33 209.33
+## <none>           170.28 180.28
+## - slope      1   183.47 191.47
+## - p_min_spr  1   188.98 196.98
+## - p_avg_y    1   189.04 197.04
+## - elev       1   197.13 205.13
 ```
 
 
@@ -244,15 +244,15 @@ aictab(mods, modnames, second.ord = T)
 ## Model selection based on AICc:
 ## 
 ##       K   AICc Delta_AICc AICcWt Cum.Wt      LL
-## mod.8 5 173.56       0.00      1      1  -81.70
-## mod.2 3 193.98      20.42      0      1  -93.96
-## mod.4 4 194.56      21.00      0      1  -93.23
-## mod.7 5 195.59      22.03      0      1  -92.71
-## mod.1 3 224.48      50.92      0      1 -109.21
-## mod.0 1 235.23      61.67      0      1 -116.61
-## mod.5 3 236.20      62.63      0      1 -115.07
-## mod.3 2 236.65      63.09      0      1 -116.31
-## mod.6 3 237.81      64.24      0      1 -115.87
+## mod.8 5 180.45       0.00      1      1  -85.14
+## mod.2 3 195.89      15.44      0      1  -94.91
+## mod.4 4 197.14      16.70      0      1  -94.52
+## mod.7 5 198.77      18.32      0      1  -94.30
+## mod.1 3 224.91      44.46      0      1 -109.42
+## mod.0 1 235.62      55.18      0      1 -116.81
+## mod.3 2 237.28      56.84      0      1 -116.63
+## mod.5 3 237.96      57.51      0      1 -115.95
+## mod.6 3 238.49      58.05      0      1 -116.22
 ```
 
 ```r
@@ -267,24 +267,24 @@ summary(mod.8)
 ## 
 ## Deviance Residuals: 
 ##      Min        1Q    Median        3Q       Max  
-## -1.35553  -0.42105  -0.19210  -0.08553   2.98736  
+## -1.16010  -0.43006  -0.19391  -0.08459   2.93785  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)  -3.8312     0.4389  -8.729  < 2e-16 ***
-## slope         0.6916     0.1736   3.985 6.75e-05 ***
-## elev         -1.7700     0.3777  -4.686 2.79e-06 ***
-## p_avg_y      -2.3063     0.5290  -4.360 1.30e-05 ***
-## p_min_spr     2.3088     0.4997   4.620 3.84e-06 ***
+## (Intercept)  -3.7096     0.4344  -8.539  < 2e-16 ***
+## slope         0.5945     0.1629   3.650 0.000262 ***
+## elev         -1.5847     0.3889  -4.075 4.61e-05 ***
+## p_avg_y      -2.1806     0.5455  -3.997 6.40e-05 ***
+## p_min_spr     2.1741     0.5265   4.129 3.64e-05 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 233.22  on 377  degrees of freedom
-## Residual deviance: 163.40  on 373  degrees of freedom
-##   (7 observations deleted due to missingness)
-## AIC: 173.4
+##     Null deviance: 233.61  on 379  degrees of freedom
+## Residual deviance: 170.28  on 375  degrees of freedom
+##   (5 observations deleted due to missingness)
+## AIC: 180.28
 ## 
 ## Number of Fisher Scoring iterations: 7
 ```
@@ -320,11 +320,11 @@ ORs
 ```
 
 ```
-##                    OR      2.5 %     97.5 %
-## slope      1.99698855 1.42669838  2.8357513
-## elev       0.17033474 0.07495006  0.3333128
-## p_avg_y    0.09963198 0.03303021  0.2672234
-## p_min_spr 10.06218067 3.91186508 28.3062587
+##                  OR      2.5 %     97.5 %
+## slope     1.8122110 1.31918128  2.5124546
+## elev      0.2050168 0.08805340  0.4087784
+## p_avg_y   0.1129699 0.03650038  0.3144093
+## p_min_spr 8.7945029 3.23875000 26.0283675
 ```
 
 ```r
@@ -334,7 +334,7 @@ vif(mod.8)
 
 ```
 ##     slope      elev   p_avg_y p_min_spr 
-##  1.234621  1.136560  8.153807  7.813005
+##  1.164546  1.024544  8.822865  8.437776
 ```
 
 
