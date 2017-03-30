@@ -5,7 +5,7 @@ date: "2017-03-30"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-bibliography: [book.bib, packages.bib]
+bibliography: [book.bib, packages.bib, 08_Bocinsky/references.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: benmarwick/How-to-do-archaeological-science-using-R
