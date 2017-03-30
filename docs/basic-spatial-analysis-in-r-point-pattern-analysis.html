@@ -6,16 +6,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>How To Do Archaeological Science Using R</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.16 and GitBook 2.6.7">
 
   <meta property="og:title" content="How To Do Archaeological Science Using R" />
   <meta property="og:type" content="book" />
   
   
   <meta property="og:description" content="This is a early draft edited volume of contributions to the ‘How To Do Archaeological Science Using R’ forum of the 2017 Society of American Archaeology annual meeting." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta name="github-repo" content="benmarwick/How-to-do-archaeological-science-using-R" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="How To Do Archaeological Science Using R" />
@@ -26,7 +25,7 @@
 <meta name="author" content="Ben Marwick (editor)">
 
 
-<meta name="date" content="2017-03-29">
+<meta name="date" content="2017-03-30">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +34,6 @@
   
 <link rel="prev" href="index.html">
 <link rel="next" href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -120,9 +118,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <body>
 
 
-<div class = rmdreview>
-This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
-</div>
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
@@ -204,6 +199,10 @@ This book is in <b><a href="open.html#open">Open Review</a></b>. I want your fee
           <div class="page-inner">
 
             <section class="normal" id="section-">
+
+<div class = rmdreview>
+This book is in <b><a href="open.html#open">Open Review</a></b>. I want your feedback to make the book better for you and other readers. To add your annotation, <span style="background-color: #3297FD; color: white">select some text</span> and then click the <i class="h-icon-annotate"></i> on the pop-up menu. To see the annotations of others, click the <i class="h-icon-chevron-left"></i> in the upper right hand corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i>
+</div>
 <div id="basic-spatial-analysis-in-r-point-pattern-analysis" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> Basic spatial analysis in R: Point pattern analysis</h1>
 <p>Phil Riris (Institute of Archaeology, UCL)</p>
@@ -342,7 +341,7 @@ sites.pp &lt;-<span class="st"> </span><span class="kw">superimpose</span>(main.
 ##  Monte Carlo test based on 999 simulations of CSR with fixed n
 ## 
 ## data:  main.pp
-## R = 1.053, p-value = 0.722
+## R = 1.053, p-value = 0.662
 ## alternative hypothesis: two-sided</code></pre>
 <p>R &gt; 1 among primary sites, but not significant</p>
 <p>Tentative conclusion: there are two different processes creating the observed distribution of sites</p>
@@ -469,12 +468,12 @@ fit.sec &lt;-<span class="st"> </span><span class="kw">ppm</span>(<span class="k
 ## [5] spatstat_1.50-0 rpart_4.1-10    nlme_3.1-131   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.10         knitr_1.15.1         tensor_1.5          
+##  [1] Rcpp_0.12.10         knitr_1.15.17        tensor_1.5          
 ##  [4] magrittr_1.5         spatstat.utils_1.4-1 lattice_0.20-34     
 ##  [7] stringr_1.2.0        tools_3.3.3          grid_3.3.3          
 ## [10] mgcv_1.8-17          deldir_0.1-12        htmltools_0.3.5     
 ## [13] yaml_2.1.14          abind_1.4-5          goftest_1.0-4       
-## [16] rprojroot_1.2        digest_0.6.12        bookdown_0.3        
+## [16] rprojroot_1.2        digest_0.6.12        bookdown_0.3.16     
 ## [19] Matrix_1.2-8         fftwtools_0.9-8      evaluate_0.10       
 ## [22] rmarkdown_1.4        polyclip_1.6-1       stringi_1.1.3       
 ## [25] backports_1.0.5      foreign_0.8-67</code></pre>
@@ -492,8 +491,9 @@ Want to know when the book is for sale? Enter your email so we can let you know.
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="using-linear-models-to-explore-childrens-institutions-in-urban-areas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>

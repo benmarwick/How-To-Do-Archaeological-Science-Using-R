@@ -1,14 +1,14 @@
 --- 
 title: "How To Do Archaeological Science Using R"
 author: "Ben Marwick (editor)"
-date: "2017-03-29"
+date: "2017-03-30"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: benmarwick/How-to-do-archaeological-science-using-R
 description: "This is a early draft edited volume of contributions to the  'How To Do Archaeological Science Using R' forum of the 2017 Society of American Archaeology annual meeting."
 ---
 

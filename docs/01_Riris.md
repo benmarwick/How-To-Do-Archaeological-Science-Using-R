@@ -211,7 +211,7 @@ clarkevans.test(main.pp, correction = c("Donnelly"), nsim = 999)
 ## 	Monte Carlo test based on 999 simulations of CSR with fixed n
 ## 
 ## data:  main.pp
-## R = 1.053, p-value = 0.722
+## R = 1.053, p-value = 0.662
 ## alternative hypothesis: two-sided
 ```
 
@@ -404,12 +404,12 @@ sessionInfo()
 ## [5] spatstat_1.50-0 rpart_4.1-10    nlme_3.1-131   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.10         knitr_1.15.1         tensor_1.5          
+##  [1] Rcpp_0.12.10         knitr_1.15.17        tensor_1.5          
 ##  [4] magrittr_1.5         spatstat.utils_1.4-1 lattice_0.20-34     
 ##  [7] stringr_1.2.0        tools_3.3.3          grid_3.3.3          
 ## [10] mgcv_1.8-17          deldir_0.1-12        htmltools_0.3.5     
 ## [13] yaml_2.1.14          abind_1.4-5          goftest_1.0-4       
-## [16] rprojroot_1.2        digest_0.6.12        bookdown_0.3        
+## [16] rprojroot_1.2        digest_0.6.12        bookdown_0.3.16     
 ## [19] Matrix_1.2-8         fftwtools_0.9-8      evaluate_0.10       
 ## [22] rmarkdown_1.4        polyclip_1.6-1       stringi_1.1.3       
 ## [25] backports_1.0.5      foreign_0.8-67

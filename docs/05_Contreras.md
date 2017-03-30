@@ -373,11 +373,11 @@ sessionInfo()
 ## [7] rgdal_1.2-5         sp_1.2-4           
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.10      knitr_1.15.1      magrittr_1.5     
+##  [1] Rcpp_0.12.10      knitr_1.15.17     magrittr_1.5     
 ##  [4] viridisLite_0.2.0 stringr_1.2.0     tools_3.3.3      
 ##  [7] parallel_3.3.3    grid_3.3.3        gtable_0.2.0     
 ## [10] htmltools_0.3.5   yaml_2.1.14       rprojroot_1.2    
-## [13] digest_0.6.12     bookdown_0.3      evaluate_0.10    
+## [13] digest_0.6.12     bookdown_0.3.16   evaluate_0.10    
 ## [16] rmarkdown_1.4     stringi_1.1.3     backports_1.0.5  
 ## [19] hexbin_1.27.1     zoo_1.7-14
 ```

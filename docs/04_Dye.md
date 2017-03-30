@@ -311,11 +311,11 @@ sessionInfo()
 ## [1] ggplot2_2.2.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.10     knitr_1.15.1     magrittr_1.5     hms_0.3         
+##  [1] Rcpp_0.12.10     knitr_1.15.17    magrittr_1.5     hms_0.3         
 ##  [5] munsell_0.4.3    colorspace_1.3-2 R6_2.2.0         stringr_1.2.0   
 ##  [9] plyr_1.8.4       tools_3.3.3      grid_3.3.3       gtable_0.2.0    
 ## [13] htmltools_0.3.5  yaml_2.1.14      lazyeval_0.2.0   rprojroot_1.2   
-## [17] digest_0.6.12    assertthat_0.1   tibble_1.2       bookdown_0.3    
+## [17] digest_0.6.12    assertthat_0.1   tibble_1.2       bookdown_0.3.16 
 ## [21] readr_1.1.0      evaluate_0.10    rmarkdown_1.4    labeling_0.3    
 ## [25] stringi_1.1.3    methods_3.3.3    scales_0.4.1     backports_1.0.5
 ```

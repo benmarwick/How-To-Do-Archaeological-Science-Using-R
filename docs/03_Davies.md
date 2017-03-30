@@ -175,8 +175,8 @@ sessionInfo()
 ## [1] RNetLogo_1.0-3 igraph_1.0.1   rJava_0.9-8   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] backports_1.0.5 bookdown_0.3    magrittr_1.5    rprojroot_1.2  
+##  [1] backports_1.0.5 bookdown_0.3.16 magrittr_1.5    rprojroot_1.2  
 ##  [5] tools_3.3.3     htmltools_0.3.5 yaml_2.1.14     Rcpp_0.12.10   
-##  [9] stringi_1.1.3   rmarkdown_1.4   knitr_1.15.1    stringr_1.2.0  
+##  [9] stringi_1.1.3   rmarkdown_1.4   knitr_1.15.17   stringr_1.2.0  
 ## [13] digest_0.6.12   evaluate_0.10
 ```
